@@ -16,6 +16,14 @@ public class Coordinate {
         return x >= -.5 && x <= .5 && y >= -.5 && y <= .5;
     }
 
+    public boolean isInViewX() {
+        return x >= -.5 && x <= .5;
+    }
+
+    public boolean isInViewY() {
+        return y >= -.5 && y <= .5;
+    }
+
     public double getX() {
         return x;
     }

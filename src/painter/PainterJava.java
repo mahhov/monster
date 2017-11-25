@@ -69,7 +69,7 @@ public class PainterJava implements Painter {
     }
 
     public void drawRectangle(CoordinateGroup coordinateGroup, double light, Color color, boolean frame, boolean fill) {
-        if (!coordinateGroup.isInView())
+        if (!coordinateGroup.isInViewRect())
             return;
 
         int[][] xy = coordinateGroup.transformXY(IMAGE_SIZE, IMAGE_SIZE / 2);

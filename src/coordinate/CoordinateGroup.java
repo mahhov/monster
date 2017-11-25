@@ -32,6 +32,10 @@ public class CoordinateGroup implements Iterable<Coordinate> {
         return false;
     }
 
+    public boolean isInViewRect() {
+        return (coordinates[0].isInViewX() || coordinates[1].isInViewX()) && (coordinates[0].isInViewY() || coordinates[1].isInViewY());
+    }
+
     public Coordinate[] getCoordinates() {
         return coordinates;
     }
