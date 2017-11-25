@@ -25,7 +25,7 @@ public class Engine implements Runnable {
     private Engine() {
         controller = new ControllerJava();
         painter = new PainterJava(FRAME, IMAGE, (ControllerJavaListener) controller);
-        camera = new Camera(0, 0, 0);
+        camera = new Camera(0, 0, 10);
         createRoom();
     }
 

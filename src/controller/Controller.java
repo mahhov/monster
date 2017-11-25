@@ -22,7 +22,7 @@ public class Controller {
 
     void setKeyState(int keyCode, int state) {
         Key key = getKey(keyCode);
-        if (key != null && (state != PRESSED || key.state == UP))
+        if (key != null && (state != PRESSED || key.state != DOWN))
             key.state = state;
     }
 
@@ -35,11 +35,9 @@ public class Controller {
         mouse.y = y;
     }
 
-    public boolean isKeyPressed(int keyCode) {
-        Key key = getKey(keyCode);
-        if (key == null)
-            return false;
-        
+    public boolean isKeyPressed(int keyIndex) {
+        Key key = keys[keyIndex];
+
         if (key.state == PRESSED) {
             key.state = DOWN;
             return true;
@@ -47,9 +45,19 @@ public class Controller {
         return false;
     }
 
-    private Key getKey(int keyCode) {
+    public boolean isKeyDown(int keyIndex) {
+        Key key = keys[keyIndex];
+
+        if (key.state == PRESSED) {
+            key.state = DOWN;
+            return true;
+        }
+        return key.state == DOWN;
+    }
+
+    private Key getKey(int code) {
         for (Key key : keys)
-            if (key.code == keyCode)
+            if (key.code == code)
                 return key;
         return null;
     }
