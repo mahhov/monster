@@ -5,9 +5,9 @@ import controller.ControllerJavaListener;
 import painter.Painter;
 import painter.PainterJava;
 import painter.painterelement.PainterQueue;
-import room.Room;
-import room.character.Human;
-import room.character.Monster;
+import house.House;
+import house.character.Human;
+import house.character.Monster;
 import util.Math3D;
 
 public class Engine implements Runnable {
@@ -16,7 +16,7 @@ public class Engine implements Runnable {
     private Controller controller;
     private Painter painter;
     private Camera camera;
-    private Room room;
+    private House house;
     private Human human;
     private Monster monster;
 
@@ -30,12 +30,12 @@ public class Engine implements Runnable {
     }
 
     private void createRoom() {
-        room = new Room();
+        house = new House();
         human = new Human();
         monster = new Monster();
         camera.setFollow(human);
-        room.addElement(human);
-        room.addElement(monster);
+        house.addElement(human);
+        house.addElement(monster);
     }
 
     private void begin() {
@@ -55,11 +55,11 @@ public class Engine implements Runnable {
             }
 
             camera.move();
-            room.update(controller);
+            house.update(controller);
 
             if (painter.isPainterQueueDone()) {
                 PainterQueue painterQueue = new PainterQueue();
-                room.draw(painterQueue, camera);
+                house.draw(painterQueue, camera);
                 painterQueue.drawReady = true;
                 painter.setPainterQueue(painterQueue);
                 frame++;

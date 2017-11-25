@@ -7,6 +7,24 @@ public class Math3D {
         return val;
     }
 
+    public static int max(int val, int max) {
+        if (val < max)
+            return max;
+        return val;
+    }
+
+    public static int abs(int value) {
+        return value > 0 ? value : -value;
+    }
+
+    public static boolean randBoolean(double trueWeight) {
+        return Math.random() < trueWeight;
+    }
+
+    public static int random(int min, int max) {
+        return (int) (Math.random() * (max - min + 1) + min);
+    }
+
     public static void sleep(int howLong) {
         try {
             Thread.sleep(howLong);

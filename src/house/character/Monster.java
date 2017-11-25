@@ -1,9 +1,9 @@
-package room.character;
+package house.character;
 
 import camera.Follow;
-import room.RoomElement;
+import house.HouseElement;
 
-public class Human implements Follow, RoomElement {
+public class Monster implements Follow, HouseElement {
     private double x, y;
     private boolean run, light;
     private int stamina;

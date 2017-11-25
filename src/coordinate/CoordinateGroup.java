@@ -7,7 +7,7 @@ public class CoordinateGroup implements Iterable<Coordinate> {
     private int size;
 
     public CoordinateGroup(int size) {
-        this.size = size;
+        coordinates = new Coordinate[size];
     }
 
     public CoordinateGroup(Coordinate[] coordinates) {
@@ -38,6 +38,10 @@ public class CoordinateGroup implements Iterable<Coordinate> {
 
     public Coordinate getCoordinate(int i) {
         return coordinates[i];
+    }
+
+    public void addCoordinate(Coordinate coordinate) {
+        coordinates[size++] = coordinate;
     }
 
     public int getSize() {
