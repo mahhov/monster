@@ -3,6 +3,7 @@ package house.character;
 import camera.Camera;
 import camera.Follow;
 import controller.Controller;
+import house.House;
 import house.HouseElement;
 import painter.painterelement.PainterQueue;
 
@@ -11,7 +12,7 @@ public class Monster implements Follow, HouseElement {
     private boolean run, light;
     private int stamina;
 
-    public void update(Controller controller) {
+    public void update(House hosue, Controller controller) {
     }
 
     public void draw(PainterQueue painterQueue, Camera camera) {

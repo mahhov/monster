@@ -2,12 +2,12 @@ import camera.Camera;
 import controller.Controller;
 import controller.ControllerJava;
 import controller.ControllerJavaListener;
-import painter.Painter;
-import painter.PainterJava;
-import painter.painterelement.PainterQueue;
 import house.House;
 import house.character.Human;
 import house.character.Monster;
+import painter.Painter;
+import painter.PainterJava;
+import painter.painterelement.PainterQueue;
 import util.Math3D;
 
 public class Engine implements Runnable {
@@ -31,7 +31,7 @@ public class Engine implements Runnable {
 
     private void createRoom() {
         house = new House();
-        human = new Human();
+        human = new Human(10, 10);
         monster = new Monster();
         camera.setFollow(human);
         house.addElement(human);

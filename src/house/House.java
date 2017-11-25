@@ -8,16 +8,20 @@ import house.generator.HouseGenerator;
 import painter.painterelement.PainterQueue;
 import painter.painterelement.PainterRectangle;
 import util.LList;
+import util.intersection.IntersectionFinder;
+import util.intersection.Map;
 
 import java.awt.*;
 
-public class House {
+public class House implements Map {
     private boolean[][] walls;
     private LList<HouseElement> elements;
+    private IntersectionFinder intersectionFinder;
 
     public House() {
         walls = new HouseGenerator().generate();
         elements = new LList<>();
+        intersectionFinder = new IntersectionFinder(this);
     }
 
     public void addElement(HouseElement element) {
@@ -26,7 +30,23 @@ public class House {
 
     public void update(Controller controller) {
         for (LList<HouseElement> element : elements)
-            element.node.update(controller);
+            element.node.update(this, controller);
+    }
+
+    public IntersectionFinder getIntersectionFinder() {
+        return intersectionFinder;
+    }
+
+    public int getWidth() {
+        return walls.length;
+    }
+
+    public int getHeight() {
+        return walls[0].length;
+    }
+
+    public boolean isMoveable(int x, int y) {
+        return !walls[x][y];
     }
 
     public void draw(PainterQueue painterQueue, Camera camera) {
