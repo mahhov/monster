@@ -75,14 +75,13 @@ public class PainterJava implements Painter {
         int[][] xy = coordinateGroup.transformXY(IMAGE_SIZE, IMAGE_SIZE / 2);
         brush.setStroke(new BasicStroke(1));
 
-        if (frame) {
-            brush.setColor(Color.CYAN);
-            brush.drawRect(xy[0][0], xy[1][0], xy[0][1] - xy[0][0], xy[1][1] - xy[1][0]);
-        }
-
         if (fill) {
             setColor(light, color);
             brush.fillRect(xy[0][0], xy[1][0], xy[0][1] - xy[0][0], xy[1][1] - xy[1][0]);
+        }
+        if (frame) {
+            brush.setColor(Color.CYAN);
+            brush.drawRect(xy[0][0], xy[1][0], xy[0][1] - xy[0][0], xy[1][1] - xy[1][0]);
         }
     }
 
@@ -93,14 +92,13 @@ public class PainterJava implements Painter {
         int[][] xy = coordinateGroup.transformXY(IMAGE_SIZE, IMAGE_SIZE / 2);
         brush.setStroke(new BasicStroke(1));
 
-        if (frame) {
-            brush.setColor(Color.CYAN);
-            brush.drawPolygon(xy[0], xy[1], xy[0].length);
-        }
-
         if (fill) {
             setColor(light, color);
             brush.fillPolygon(xy[0], xy[1], xy[0].length);
+        }
+        if (frame) {
+            brush.setColor(Color.CYAN);
+            brush.drawPolygon(xy[0], xy[1], xy[0].length);
         }
     }
 
