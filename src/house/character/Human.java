@@ -41,7 +41,7 @@ public class Human implements Follow, HouseElement {
         if (controller.isKeyDown(Controller.KEY_S))
             dir[1] += speed;
 
-        Intersection intersection = house.getIntersectionFinder().find(orig, dir, speed, true, SIZE);
+        Intersection intersection = house.getIntersectionFinder().find(orig, dir, speed, SIZE);
 
         x = intersection.getX();
         y = intersection.getY();

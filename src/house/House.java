@@ -4,7 +4,6 @@ import camera.Camera;
 import controller.Controller;
 import coordinate.Coordinate;
 import coordinate.CoordinateGroup;
-import house.generator.HouseGenerator;
 import painter.painterelement.PainterQueue;
 import painter.painterelement.PainterRectangle;
 import util.LList;
@@ -18,8 +17,8 @@ public class House implements Map {
     private LList<HouseElement> elements;
     private IntersectionFinder intersectionFinder;
 
-    public House() {
-        walls = new HouseGenerator().generate();
+    public House(boolean[][] walls) {
+        this.walls = walls;
         elements = new LList<>();
         intersectionFinder = new IntersectionFinder(this);
     }

@@ -5,6 +5,7 @@ import controller.ControllerJavaListener;
 import house.House;
 import house.character.Human;
 import house.character.Monster;
+import house.generator.HouseGenerator;
 import painter.Painter;
 import painter.PainterJava;
 import painter.painterelement.PainterQueue;
@@ -30,8 +31,11 @@ public class Engine implements Runnable {
     }
 
     private void createRoom() {
-        house = new House();
-        human = new Human(10, 10);
+        HouseGenerator houseGenerator = new HouseGenerator();
+        houseGenerator.generate();
+
+        house = new House(houseGenerator.getWalls());
+        human = new Human(houseGenerator.getSpawnX(), houseGenerator.getSpawnY());
         monster = new Monster();
         camera.setFollow(human);
         house.addElement(human);
