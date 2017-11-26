@@ -21,16 +21,16 @@ public class IntersectionFinder {
         dir = Math3D.setMagnitude(dir[0], dir[1], maxMove);
         halfSize = size / 2;
 
-        intTopY = (int) (y - halfSize);
-        intBottomY = (int) (y + halfSize);
+        intTopY = (int) (y - halfSize + Math3D.EPSILON);
+        intBottomY = (int) (y + halfSize - Math3D.EPSILON);
 
         if (dir[0] < 0)
             helperLeft(dir[0]);
         else if (dir[0] > 0)
             helperRight(dir[0]);
 
-        intLeftX = (int) (x - halfSize);
-        intRightX = (int) (x + halfSize);
+        intLeftX = (int) (x - halfSize + Math3D.EPSILON);
+        intRightX = (int) (x + halfSize - Math3D.EPSILON);
 
         if (dir[1] < 0)
             helperTop(dir[1]);
