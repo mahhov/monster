@@ -48,7 +48,7 @@ public class Human implements Follow, HouseElement {
     }
 
     public void draw(PainterQueue painterQueue, Camera camera) {
-        CoordinateGroup coordinates = House.getRect(x - SIZE * .5, y - SIZE * .5, SIZE, SIZE, camera);
+        CoordinateGroup coordinates = House.getRect(x - SIZE * .5, y - SIZE * .5, SIZE, SIZE, camera, 0);
         painterQueue.add(new PainterRectangle(coordinates, 1, COLOR, true, true));
     }
 

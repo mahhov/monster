@@ -5,6 +5,8 @@ import util.LList;
 
 public class PainterQueue extends PainterElement {
     private static final int NUM_LAYERS = 2;
+    public static final int WALL_SIDE_LAYER = 0, WALL_TOP_LAYER = 1;
+
     private Layer[] layers;
     public boolean drawReady;
 

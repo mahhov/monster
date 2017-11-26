@@ -3,7 +3,7 @@ package camera;
 public class Camera {
     private static final double PAN_WEIGHT = .1;
 
-    private double x, y, z, zinv;
+    public double x, y, z, zinv;
     private Follow follow;
 
     public Camera(double x, double y, double z) {
@@ -33,8 +33,12 @@ public class Camera {
     public double getViewSize() {
         return z;
     }
-    
+
     public double getBlockSize() {
         return zinv;
+    }
+
+    public double getBlockSize(double z) {
+        return z == 0 ? zinv : 1 / (this.z - z);
     }
 }
