@@ -1,28 +1,18 @@
 package house.character;
 
-import camera.Camera;
-import camera.Follow;
 import controller.Controller;
-import geometry.CubeGeometry;
 import house.House;
-import house.HouseElement;
-import painter.painterelement.PainterPolygon;
-import painter.painterelement.PainterQueue;
 import util.intersection.Intersection;
 
 import java.awt.*;
 
-public class Human implements Follow, HouseElement {
-    private static final Color COLOR_TOP = new Color(0, 80, 0),COLOR_SIDE = new Color(0, 120, 0);
+public class Human extends Character {
+    private static final Color COLOR_TOP = new Color(0, 80, 0), COLOR_SIDE = new Color(0, 120, 0);
     private static final double WALK_SPEED = .1, RUN_SPEED = .3;
-    private static final double SIZE = .5;
-    private double x, y;
-    private boolean run, light;
-    private int stamina;
+    private boolean light;
 
     public Human(double x, double y) {
-        this.x = x;
-        this.y = y;
+        super(COLOR_TOP, COLOR_SIDE, x, y);
     }
 
     public void update(House house, Controller controller) {
@@ -45,23 +35,5 @@ public class Human implements Follow, HouseElement {
 
         x = intersection.getX();
         y = intersection.getY();
-    }
-
-    public void draw(PainterQueue painterQueue, Camera camera) {
-        CubeGeometry geometry = new CubeGeometry(x - SIZE * .5, y - SIZE * .5, 0, SIZE, SIZE, SIZE, camera);
-
-        painterQueue.add(new PainterPolygon(geometry.getTop(), 1, COLOR_TOP, false, true), PainterQueue.WALL_TOP_LAYER);
-        painterQueue.add(new PainterPolygon(geometry.getFront(), 1, COLOR_SIDE, false, true), PainterQueue.WALL_SIDE_LAYER);
-        painterQueue.add(new PainterPolygon(geometry.getRight(), 1, COLOR_SIDE, false, true), PainterQueue.WALL_SIDE_LAYER);
-        painterQueue.add(new PainterPolygon(geometry.getBack(), 1, COLOR_SIDE, false, true), PainterQueue.WALL_SIDE_LAYER);
-        painterQueue.add(new PainterPolygon(geometry.getLeft(), 1, COLOR_SIDE, false, true), PainterQueue.WALL_SIDE_LAYER);
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
     }
 }

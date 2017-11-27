@@ -1,28 +1,18 @@
 package house.character;
 
-import camera.Camera;
-import camera.Follow;
 import controller.Controller;
 import house.House;
-import house.HouseElement;
-import painter.painterelement.PainterQueue;
 
-public class Monster implements Follow, HouseElement {
-    private double x, y;
-    private boolean run, light;
-    private int stamina;
+import java.awt.*;
 
-    public void update(House hosue, Controller controller) {
+public class Monster extends Character {
+    private static final Color COLOR_TOP = new Color(0, 80, 0), COLOR_SIDE = new Color(0, 120, 0);
+    private static final double WALK_SPEED = .15, RUN_SPEED = .45;
+
+    public Monster(double x, double y) {
+        super(COLOR_TOP, COLOR_SIDE, x, y);
     }
 
-    public void draw(PainterQueue painterQueue, Camera camera) {
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
+    public void update(House house, Controller controller) {
     }
 }

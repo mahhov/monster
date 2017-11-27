@@ -10,14 +10,15 @@ public class HouseGenerator {
     private Room[] rooms;
     private int roomCount;
     private boolean[][] walls;
-    private double spawnX, spawnY;
+    private double humanSpawnX, humanSpawnY;
+    private double monsterSpawnX, monsterSpawnY;
 
     public void generate() {
         initWalls();
         placeRooms();
         connectRooms();
         fillRoomWalls();
-        findSpawn();
+        findSpawns();
     }
 
     private void initWalls() {
@@ -94,26 +95,23 @@ public class HouseGenerator {
         }
     }
 
-    private void findSpawn() {
-        do {
-            spawnX = Math3D.random(0, WIDTH);
-            spawnY = Math3D.random(0, HEIGHT);
-        } while (!validSpawn());
+    private void findSpawns() {
+        humanSpawnX = rooms[0].getX();
+        humanSpawnY = rooms[0].getY();
+
+        monsterSpawnX = rooms[1].getX();
+        monsterSpawnY = rooms[1].getY();
     }
 
-    private boolean validSpawn(){
-        return !walls[(int) spawnX][(int) spawnY];
-    }
-    
     public boolean[][] getWalls() {
         return walls;
     }
 
-    public double getSpawnX() {
-        return spawnX;
+    public double getHumanSpawnX() {
+        return humanSpawnX;
     }
 
-    public double getSpawnY() {
-        return spawnY;
+    public double getHumanSpawnY() {
+        return humanSpawnY;
     }
 }
