@@ -3,17 +3,17 @@ package house.character;
 import camera.Camera;
 import camera.Follow;
 import controller.Controller;
-import coordinate.CoordinateGroup;
+import geometry.CubeGeometry;
 import house.House;
 import house.HouseElement;
+import painter.painterelement.PainterPolygon;
 import painter.painterelement.PainterQueue;
-import painter.painterelement.PainterRectangle;
 import util.intersection.Intersection;
 
 import java.awt.*;
 
 public class Human implements Follow, HouseElement {
-    private static final Color COLOR = new Color(0, 80, 0);
+    private static final Color COLOR_TOP = new Color(0, 80, 0),COLOR_SIDE = new Color(0, 120, 0);
     private static final double WALK_SPEED = .1, RUN_SPEED = .3;
     private static final double SIZE = .5;
     private double x, y;
@@ -48,8 +48,13 @@ public class Human implements Follow, HouseElement {
     }
 
     public void draw(PainterQueue painterQueue, Camera camera) {
-        CoordinateGroup coordinates = House.getRect(x - SIZE * .5, y - SIZE * .5, SIZE, SIZE, camera, 0);
-        painterQueue.add(new PainterRectangle(coordinates, 1, COLOR, true, true));
+        CubeGeometry geometry = new CubeGeometry(x - SIZE * .5, y - SIZE * .5, 0, SIZE, SIZE, SIZE, camera);
+
+        painterQueue.add(new PainterPolygon(geometry.getTop(), 1, COLOR_TOP, false, true), PainterQueue.WALL_TOP_LAYER);
+        painterQueue.add(new PainterPolygon(geometry.getFront(), 1, COLOR_SIDE, false, true), PainterQueue.WALL_SIDE_LAYER);
+        painterQueue.add(new PainterPolygon(geometry.getRight(), 1, COLOR_SIDE, false, true), PainterQueue.WALL_SIDE_LAYER);
+        painterQueue.add(new PainterPolygon(geometry.getBack(), 1, COLOR_SIDE, false, true), PainterQueue.WALL_SIDE_LAYER);
+        painterQueue.add(new PainterPolygon(geometry.getLeft(), 1, COLOR_SIDE, false, true), PainterQueue.WALL_SIDE_LAYER);
     }
 
     public double getX() {

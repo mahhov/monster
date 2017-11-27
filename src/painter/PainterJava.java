@@ -1,8 +1,8 @@
 package painter;
 
 import controller.ControllerJavaListener;
-import coordinate.Coordinate;
-import coordinate.CoordinateGroup;
+import geometry.Coordinate;
+import geometry.CoordinateGroup;
 import painter.painterelement.PainterQueue;
 import util.Math3D;
 

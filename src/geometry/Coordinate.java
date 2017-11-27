@@ -1,4 +1,4 @@
-package coordinate;
+package geometry;
 
 public class Coordinate {
     private double x, y;
