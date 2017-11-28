@@ -2,13 +2,17 @@ package controller;
 
 public class Controller {
     public static final int UP = 0, DOWN = 1, PRESSED = 2, RELEASED = 3;
-    public static final int KEY_W = 0, KEY_A = 1, KEY_S = 2, KEY_D = 3, KEY_LEFT_CAROT = 4, KEY_RIGHT_CAROT = 5, KEY_P = 6;
+    public static final int
+            KEY_W = 0, KEY_A = 1, KEY_S = 2, KEY_D = 3,
+            KEY_LEFT_CAROT = 4, KEY_RIGHT_CAROT = 5,
+            KEY_P = 6,
+            KEY_MINUS = 7, KEY_EQUAL = 8;
 
     private Key[] keys;
     private Mouse mouse;
 
     Controller() {
-        keys = new Key[7];
+        keys = new Key[9];
         keys[KEY_W] = new Key(87);
         keys[KEY_A] = new Key(65);
         keys[KEY_S] = new Key(83);
@@ -16,6 +20,8 @@ public class Controller {
         keys[KEY_LEFT_CAROT] = new Key(44);
         keys[KEY_RIGHT_CAROT] = new Key(46);
         keys[KEY_P] = new Key(80);
+        keys[KEY_MINUS] = new Key(45);
+        keys[KEY_EQUAL] = new Key(61);
 
         mouse = new Mouse();
     }

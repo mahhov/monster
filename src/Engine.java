@@ -26,7 +26,7 @@ public class Engine implements Runnable {
     private Engine() {
         controller = new ControllerJava();
         painter = new PainterJava(FRAME, IMAGE, (ControllerJavaListener) controller);
-        camera = new Camera(0, 0, 100);
+        camera = new Camera(0, 0, 20);
         createRoom();
     }
 
@@ -58,7 +58,7 @@ public class Engine implements Runnable {
                 Math3D.sleep(30);
             }
 
-            camera.move();
+            camera.move(controller);
             house.update(controller);
 
             if (painter.isPainterQueueDone()) {
