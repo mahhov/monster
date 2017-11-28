@@ -6,20 +6,20 @@ public class Camera {
     private static final double PAN_WEIGHT = .1, Z_SPEED = 1.05;
     private static final double MIN_Z = 10, MAX_Z = 100;
 
-    private double x, y, z, zinv, zgoal;
+    private double x, y, z, zgoal;
     private Follow follow;
 
     public Camera(double x, double y, double z) {
         this.x = x;
         this.y = y;
-        setZ(z);
+        this.z = z;
         setZGoal(z);
     }
 
     public void move(Controller controller) {
         x += (follow.getX() - x) * PAN_WEIGHT;
         y += (follow.getY() - y) * PAN_WEIGHT;
-        setZ(z + (zgoal - z) * PAN_WEIGHT);
+        z += (zgoal - z) * PAN_WEIGHT;
 
         if (controller.isKeyDown(Controller.KEY_MINUS))
             setZGoal(zgoal * Z_SPEED);
@@ -39,16 +39,8 @@ public class Camera {
         return y;
     }
 
-    public double getViewSize() {
-        return z;
-    }
-
-    public double getBlockSize() {
-        return zinv;
-    }
-
     public double getBlockSize(double z) {
-        return z == 0 ? zinv : 1 / (this.z - z);
+        return 1 / (this.z - z);
     }
 
     private void setZGoal(double z) {
@@ -57,10 +49,5 @@ public class Camera {
         else if (z > MAX_Z)
             z = MAX_Z;
         zgoal = z;
-    }
-
-    private void setZ(double z) {
-        this.z = z;
-        zinv = 1 / z;
     }
 }
