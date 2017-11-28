@@ -3,6 +3,7 @@ package house.character;
 import camera.Camera;
 import camera.Follow;
 import controller.Controller;
+import geometry.Coordinate;
 import geometry.CubeGeometry;
 import house.House;
 import house.HouseCharacter;
@@ -19,11 +20,11 @@ public class Character implements Follow, HouseCharacter {
     private double smellDistance, soundWalkDistance, soundRunDistance;
     Sense sense;
 
-    Character(Color colorTop, Color colorSide, double x, double y, double smellDistance, double soundWalkDistance, double soundRunDistance) {
+    Character(Color colorTop, Color colorSide, Coordinate spawn, double smellDistance, double soundWalkDistance, double soundRunDistance) {
         this.colorTop = colorTop;
         this.colorSide = colorSide;
-        this.x = x;
-        this.y = y;
+        x = spawn.getX();
+        y = spawn.getY();
         this.smellDistance = smellDistance;
         this.soundWalkDistance = soundWalkDistance;
         this.soundRunDistance = soundRunDistance;

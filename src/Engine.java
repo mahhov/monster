@@ -26,7 +26,7 @@ public class Engine implements Runnable {
     private Engine() {
         controller = new ControllerJava();
         painter = new PainterJava(FRAME, IMAGE, (ControllerJavaListener) controller);
-        camera = new Camera(0, 0, 10);
+        camera = new Camera(0, 0, 100);
         createRoom();
     }
 
@@ -35,8 +35,8 @@ public class Engine implements Runnable {
         houseGenerator.generate();
 
         house = new House(houseGenerator.getWalls());
-        human = new Human(houseGenerator.getHumanSpawnX(), houseGenerator.getHumanSpawnY());
-        monster = new Monster(houseGenerator.getMonsterSpawnX(), houseGenerator.getMonsterSpawnY());
+        human = new Human(houseGenerator.getSpawn(0));
+        monster = new Monster(houseGenerator.getSpawn(1));
         camera.setFollow(human);
         house.setHuman(human);
         house.setMonster(monster);

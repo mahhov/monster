@@ -1,6 +1,7 @@
 package house.character;
 
 import controller.Controller;
+import geometry.Coordinate;
 import house.House;
 import util.intersection.Intersection;
 
@@ -12,8 +13,8 @@ public class Human extends Character {
     private static final double WALK_SPEED = .1, RUN_SPEED = .3;
     private boolean light;
 
-    public Human(double x, double y) {
-        super(COLOR_TOP, COLOR_SIDE, x, y, SMELL_DISTANCE, SOUND_WALK_DISTANCE, SOUND_RUN_DISTANCE);
+    public Human(Coordinate spawn) {
+        super(COLOR_TOP, COLOR_SIDE, spawn, SMELL_DISTANCE, SOUND_WALK_DISTANCE, SOUND_RUN_DISTANCE);
     }
 
     public void update(House house, Controller controller, Character otherCharacter) {

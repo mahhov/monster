@@ -1,5 +1,6 @@
 package house.generator;
 
+import geometry.Coordinate;
 import util.Math3D;
 
 public class HouseGenerator {
@@ -10,8 +11,7 @@ public class HouseGenerator {
     private Room[] rooms;
     private int roomCount;
     private boolean[][] walls;
-    private double humanSpawnX, humanSpawnY;
-    private double monsterSpawnX, monsterSpawnY;
+    private Coordinate[] spawns;
 
     public void generate() {
         initWalls();
@@ -96,30 +96,16 @@ public class HouseGenerator {
     }
 
     private void findSpawns() {
-        humanSpawnX = rooms[0].getX();
-        humanSpawnY = rooms[0].getY();
-
-        monsterSpawnX = rooms[1].getX();
-        monsterSpawnY = rooms[1].getY();
+        spawns = new Coordinate[3];
+        for (int i = 0; i < spawns.length; i++)
+            spawns[i] = new Coordinate(rooms[i].getX(), rooms[i].getY());
     }
 
     public boolean[][] getWalls() {
         return walls;
     }
 
-    public double getHumanSpawnX() {
-        return humanSpawnX;
-    }
-
-    public double getHumanSpawnY() {
-        return humanSpawnY;
-    }
-
-    public double getMonsterSpawnX() {
-        return monsterSpawnX;
-    }
-
-    public double getMonsterSpawnY() {
-        return monsterSpawnY;
+    public Coordinate getSpawn(int i) {
+        return spawns[i];
     }
 }
