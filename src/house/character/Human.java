@@ -14,7 +14,7 @@ public class Human extends Character {
     private boolean light;
 
     public Human(Coordinate spawn) {
-        super(COLOR_TOP, COLOR_SIDE, spawn, SMELL_DISTANCE, SOUND_WALK_DISTANCE, SOUND_RUN_DISTANCE);
+        super(true, COLOR_TOP, COLOR_SIDE, spawn, SMELL_DISTANCE, SOUND_WALK_DISTANCE, SOUND_RUN_DISTANCE);
     }
 
     public void update(House house, Controller controller, Character otherCharacter) {

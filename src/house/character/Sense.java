@@ -1,5 +1,7 @@
 package house.character;
 
+import util.Math3D;
+
 class Sense {
     boolean smell, sound;
     double soundDirX, soundDirY;
@@ -7,8 +9,19 @@ class Sense {
 
     void setSound(Character observer, Character source) {
         sound = true;
+
         soundDirX = source.getX() - observer.getX();
         soundDirY = source.getY() - observer.getY();
+        double absX = Math3D.abs(soundDirX);
+        double absY = Math3D.abs(soundDirY);
+        
+        if (absX > absY) {
+            soundDirY /= absX;
+            soundDirX = Math3D.sign(soundDirX);
+        } else {
+            soundDirX /= absY;
+            soundDirY = Math3D.sign(soundDirY);
+        }
     }
 
     void clearSound() {

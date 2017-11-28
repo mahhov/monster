@@ -12,11 +12,12 @@ public class Monster extends Character {
     private static final double WALK_SPEED = .15, RUN_SPEED = .45;
 
     public Monster(Coordinate spawn) {
-        super(COLOR_TOP, COLOR_SIDE, spawn, SMELL_DISTANCE, SOUND_WALK_DISTANCE, SOUND_RUN_DISTANCE);
+        super(false, COLOR_TOP, COLOR_SIDE, spawn, SMELL_DISTANCE, SOUND_WALK_DISTANCE, SOUND_RUN_DISTANCE);
     }
 
     public void update(House house, Controller controller, Character otherCharacter) {
         super.update(house, controller, otherCharacter);
+
 
     }
 }

@@ -26,6 +26,14 @@ public class Math3D {
         return value > 0 ? value : -value;
     }
 
+    public static double abs(double value) {
+        return value > 0 ? value : -value;
+    }
+
+    public static double sign(double value) {
+        return value > 0 ? 1 : -1;
+    }
+
     public static boolean isZero(double value) {
         return value < Math3D.EPSILON && value > -Math3D.EPSILON;
     }
