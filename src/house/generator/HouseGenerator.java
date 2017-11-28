@@ -114,4 +114,12 @@ public class HouseGenerator {
     public double getHumanSpawnY() {
         return humanSpawnY;
     }
+
+    public double getMonsterSpawnX() {
+        return monsterSpawnX;
+    }
+
+    public double getMonsterSpawnY() {
+        return monsterSpawnY;
+    }
 }

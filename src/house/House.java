@@ -3,6 +3,8 @@ package house;
 import camera.Camera;
 import controller.Controller;
 import geometry.CubeGeometry;
+import house.character.Human;
+import house.character.Monster;
 import painter.painterelement.PainterPolygon;
 import painter.painterelement.PainterQueue;
 import util.LList;
@@ -15,6 +17,8 @@ public class House implements Map {
     private boolean[][] walls;
     private LList<HouseElement> elements;
     private IntersectionFinder intersectionFinder;
+    private Human human;
+    private Monster monster;
 
     public House(boolean[][] walls) {
         this.walls = walls;
@@ -26,9 +30,19 @@ public class House implements Map {
         elements = elements.add(element);
     }
 
+    public void setHuman(Human human) {
+        this.human = human;
+    }
+
+    public void setMonster(Monster monster) {
+        this.monster = monster;
+    }
+
     public void update(Controller controller) {
         for (LList<HouseElement> element : elements)
-            element.node.update(this, controller);
+            element.node.update(this);
+        human.update(this, controller, monster);
+        monster.update(this, controller, human);
     }
 
     public IntersectionFinder getIntersectionFinder() {
@@ -62,5 +76,8 @@ public class House implements Map {
 
         for (LList<HouseElement> element : elements)
             element.node.draw(painterQueue, camera);
+
+        human.draw(painterQueue, camera);
+        monster.draw(painterQueue, camera);
     }
 }
