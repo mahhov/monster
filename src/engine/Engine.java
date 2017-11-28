@@ -39,7 +39,7 @@ public class Engine implements Runnable {
         Human human = new Human(houseGenerator.getSpawn(0));
         camera.setFollow(human);
         house.setHuman(human);
-        house.setMonster(new Monster(houseGenerator.getSpawn(1)));
+        house.setMonster(new Monster(houseGenerator.getSpawn(0))); // todo; change to 1
         house.setExit(new Exit(houseGenerator.getSpawn(2)));
     }
 
@@ -91,3 +91,6 @@ public class Engine implements Runnable {
         new Engine().begin();
     }
 }
+
+// todo monster ai
+// todo light
