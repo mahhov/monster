@@ -4,6 +4,7 @@ import camera.Camera;
 import controller.Controller;
 import controller.ControllerJava;
 import controller.ControllerJavaListener;
+import house.Exit;
 import house.House;
 import house.character.Human;
 import house.character.Monster;
@@ -20,8 +21,6 @@ public class Engine implements Runnable {
     private Painter painter;
     private Camera camera;
     private House house;
-    private Human human;
-    private Monster monster;
 
     private boolean pause;
 
@@ -37,11 +36,11 @@ public class Engine implements Runnable {
         houseGenerator.generate();
 
         house = new House(houseGenerator.getWalls());
-        human = new Human(houseGenerator.getSpawn(0));
-        monster = new Monster(houseGenerator.getSpawn(1));
+        Human human = new Human(houseGenerator.getSpawn(0));
         camera.setFollow(human);
         house.setHuman(human);
-        house.setMonster(monster);
+        house.setMonster(new Monster(houseGenerator.getSpawn(1)));
+        house.setExit(new Exit(houseGenerator.getSpawn(2)));
     }
 
     private void begin() {

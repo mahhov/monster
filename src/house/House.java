@@ -2,11 +2,10 @@ package house;
 
 import camera.Camera;
 import controller.Controller;
-import geometry.CubeGeometry;
 import house.character.Human;
 import house.character.Monster;
-import painter.painterelement.PainterPolygon;
 import painter.painterelement.PainterQueue;
+import util.DrawUtil;
 import util.LList;
 import util.intersection.IntersectionFinder;
 import util.intersection.Map;
@@ -19,6 +18,7 @@ public class House implements Map {
     private IntersectionFinder intersectionFinder;
     private Human human;
     private Monster monster;
+    private Exit exit;
 
     public House(boolean[][] walls) {
         this.walls = walls;
@@ -36,6 +36,10 @@ public class House implements Map {
 
     public void setMonster(Monster monster) {
         this.monster = monster;
+    }
+
+    public void setExit(Exit exit) {
+        this.exit = exit;
     }
 
     public void update(Controller controller) {
@@ -64,20 +68,14 @@ public class House implements Map {
     public void draw(PainterQueue painterQueue, Camera camera) {
         for (int x = 0; x < walls.length; x++)
             for (int y = 0; y < walls[0].length; y++)
-                if (walls[x][y]) {
-                    CubeGeometry geometry = new CubeGeometry(x, y, 0, 1, 1, 1, camera);
-
-                    painterQueue.add(new PainterPolygon(geometry.getTop(), 1, Color.LIGHT_GRAY, false, true), PainterQueue.WALL_TOP_LAYER);
-                    painterQueue.add(new PainterPolygon(geometry.getFront(), 1, Color.DARK_GRAY, false, true), PainterQueue.WALL_SIDE_LAYER);
-                    painterQueue.add(new PainterPolygon(geometry.getRight(), 1, Color.DARK_GRAY, false, true), PainterQueue.WALL_SIDE_LAYER);
-                    painterQueue.add(new PainterPolygon(geometry.getBack(), 1, Color.DARK_GRAY, false, true), PainterQueue.WALL_SIDE_LAYER);
-                    painterQueue.add(new PainterPolygon(geometry.getLeft(), 1, Color.DARK_GRAY, false, true), PainterQueue.WALL_SIDE_LAYER);
-                }
+                if (walls[x][y])
+                    DrawUtil.drawCubeFromCorner(painterQueue, camera, x, y, 1, Color.LIGHT_GRAY, Color.DARK_GRAY, PainterQueue.WALL_TOP_LAYER, PainterQueue.WALL_SIDE_LAYER);
 
         for (LList<HouseElement> element : elements)
             element.node.draw(painterQueue, camera);
 
         human.draw(painterQueue, camera);
         monster.draw(painterQueue, camera);
+        exit.draw(painterQueue, camera);
     }
 }

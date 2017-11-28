@@ -4,11 +4,10 @@ import camera.Camera;
 import camera.Follow;
 import controller.Controller;
 import geometry.Coordinate;
-import geometry.CubeGeometry;
 import house.House;
 import house.HouseCharacter;
-import painter.painterelement.PainterPolygon;
 import painter.painterelement.PainterQueue;
+import util.DrawUtil;
 
 import java.awt.*;
 
@@ -48,13 +47,7 @@ public class Character implements Follow, HouseCharacter {
     }
 
     public void draw(PainterQueue painterQueue, Camera camera) {
-        CubeGeometry geometry = new CubeGeometry(x - SIZE * .5, y - SIZE * .5, 0, SIZE, SIZE, SIZE, camera);
-
-        painterQueue.add(new PainterPolygon(geometry.getTop(), 1, colorTop, false, true), PainterQueue.CHARACTER_TOP_LAYER);
-        painterQueue.add(new PainterPolygon(geometry.getFront(), 1, colorSide, false, true), PainterQueue.CHARACTER_SIDE_LAYER);
-        painterQueue.add(new PainterPolygon(geometry.getRight(), 1, colorSide, false, true), PainterQueue.CHARACTER_SIDE_LAYER);
-        painterQueue.add(new PainterPolygon(geometry.getBack(), 1, colorSide, false, true), PainterQueue.CHARACTER_SIDE_LAYER);
-        painterQueue.add(new PainterPolygon(geometry.getLeft(), 1, colorSide, false, true), PainterQueue.CHARACTER_SIDE_LAYER);
+        DrawUtil.drawCubeFromCenter(painterQueue, camera, x, y, SIZE, colorTop, colorSide, PainterQueue.CHARACTER_TOP_LAYER, PainterQueue.CHARACTER_SIDE_LAYER);
     }
 
     public double getX() {

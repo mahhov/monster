@@ -1,10 +1,5 @@
 package house;
 
-import camera.Camera;
-import painter.painterelement.PainterQueue;
-
-public interface HouseElement {
+public interface HouseElement extends HouseDrawable {
     void update(House house);
-
-    void draw(PainterQueue painterQueue, Camera camera);
 }
