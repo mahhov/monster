@@ -1,13 +1,13 @@
 package house.generator;
 
-import geometry.Coordinate;
+import painter.geometry.Coordinate;
 import util.Math3D;
 
 public class HouseGenerator {
     private static final int WIDTH = 128, HEIGHT = 128;
     private static final int MIN_ROOM_SIZE = 5, MAX_ROOM_SIZE = 12;
     private static final int NUM_ROOMS = 1000;
-    private static final int NUM_CONNECTIONS = 1000;
+    private static final int NUM_CONNECTIONS = 1000, MAX_CONNECTION_LENGTH = 10;
     private Room[] rooms;
     private int roomCount;
     private boolean[][] walls;
@@ -65,7 +65,7 @@ public class HouseGenerator {
             Room room1 = rooms[roomNum1];
             Room room2 = rooms[roomNum2];
 
-            if (room1.distance(room2) < 10) {
+            if (room1.distance(room2) < MAX_CONNECTION_LENGTH) {
                 room1.setConnected();
                 room2.setConnected();
 
@@ -97,8 +97,12 @@ public class HouseGenerator {
 
     private void findSpawns() {
         spawns = new Coordinate[3];
-        for (int i = 0; i < spawns.length; i++)
-            spawns[i] = new Coordinate(rooms[i].getX(), rooms[i].getY());
+        int j = 0;
+        for (int i = 0; i < spawns.length; i++) {
+            while (!rooms[j].isConnected())
+                j++;
+            spawns[i] = new Coordinate(rooms[j].getX(), rooms[j].getY());
+        }
     }
 
     public boolean[][] getWalls() {
