@@ -1,7 +1,7 @@
 package painter.painterelement;
 
-import geometry.CoordinateGroup;
 import painter.Painter;
+import painter.geometry.CoordinateGroup;
 
 import java.awt.*;
 

@@ -1,12 +1,12 @@
-package util.intersection;
+package util.map.intersectionfinder;
 
 import util.Math3D;
+import util.map.Map;
 
-public class IntersectionFinder {
+public class IntersectionFinder { // todo : clean up + temp vars
     private double x, y;
     private int intLeftX, intRightX;
     private int intTopY, intBottomY;
-    private double maxDeltaX, maxDeltaY;
     private double halfSize;
 
     private Map map;

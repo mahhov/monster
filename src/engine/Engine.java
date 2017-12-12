@@ -15,7 +15,7 @@ import painter.painterelement.PainterQueue;
 import util.Math3D;
 
 public class Engine implements Runnable {
-    private static final int FRAME = 800, IMAGE = 400;
+    private static final int FRAME = 400, IMAGE = 400;
 
     private Controller controller;
     private Painter painter;

@@ -1,6 +1,6 @@
 package painter.painterelement;
 
-import geometry.CoordinateGroup;
+import painter.geometry.CoordinateGroup;
 import painter.Painter;
 
 import java.awt.*;

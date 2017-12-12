@@ -3,13 +3,13 @@ package house.character;
 import camera.Camera;
 import camera.Follow;
 import controller.Controller;
-import geometry.Coordinate;
 import house.House;
 import house.HouseCharacter;
+import painter.geometry.Coordinate;
 import painter.painterelement.PainterQueue;
 import util.DrawUtil;
 import util.Math3D;
-import util.intersection.Intersection;
+import util.map.intersectionfinder.Intersection;
 
 import java.awt.*;
 
@@ -20,6 +20,7 @@ public class Character implements Follow, HouseCharacter {
     private double walkSpeed, runSpeed;
 
     private double x, y;
+    private double dirX, dirY;
     private boolean run;
 
     private double smellDistance, soundWalkDistance, soundRunDistance;
@@ -42,36 +43,42 @@ public class Character implements Follow, HouseCharacter {
     public void update(House house, Controller controller, Character otherCharacter) {
         setSense(otherCharacter);
         if (main)
-            move(house, applyController(controller));
-
+            applyController(controller);
+        else
+            applyComputer(house, otherCharacter);
+        move(house);
     }
 
-    private double[] applyController(Controller controller) {
-        run = controller.isKeyDown(Controller.KEY_RIGHT_CAROT);
+    private void applyController(Controller controller) {
+        setRun(controller.isKeyDown(Controller.KEY_RIGHT_CAROT));
 
-        double[] dir = new double[] {0, 0};
         if (controller.isKeyDown(Controller.KEY_A))
-            dir[0] -= 1;
-        if (controller.isKeyDown(Controller.KEY_D))
-            dir[0] += 1;
+            setDirX(-1);
+        else if (controller.isKeyDown(Controller.KEY_D))
+            setDirX(1);
+        else
+            setDirX(0);
         if (controller.isKeyDown(Controller.KEY_W))
-            dir[1] -= 1;
-        if (controller.isKeyDown(Controller.KEY_S))
-            dir[1] += 1;
-
-        return dir;
+            setDirY(-1);
+        else if (controller.isKeyDown(Controller.KEY_S))
+            setDirY(1);
+        else
+            setDirY(0);
     }
 
-    private void move(House house, double[] dir) {
+    void applyComputer(House house, Character otherCharacter) {
+    }
+
+    private void move(House house) {
         double speed = run ? runSpeed : walkSpeed;
         double[] orig = new double[] {x, y};
-        Intersection intersection = house.getIntersectionFinder().find(orig, dir, speed, SIZE);
+        Intersection intersection = house.getIntersectionFinder().find(orig, new double[] {dirX, dirY}, speed, SIZE);
         x = intersection.getX();
         y = intersection.getY();
     }
 
     private void setSense(Character source) {
-        double distance = Math3D.magnitude(source.getX() - x, source.getY() - y);
+        double distance = getDistance(source.getX(), source.getY());
         if (source.run && distance < source.soundRunDistance || distance < source.soundWalkDistance)
             sense.setSound(this, source);
         else
@@ -80,6 +87,10 @@ public class Character implements Follow, HouseCharacter {
             sense.setSmell(source);
         else
             sense.clearSmell();
+    }
+
+    double getDistance(double x, double y) {
+        return Math3D.magnitude(x - this.x, y - this.y); // todo: convert to magSquared
     }
 
     public void draw(PainterQueue painterQueue, Camera camera) {
@@ -91,7 +102,7 @@ public class Character implements Follow, HouseCharacter {
 
     private void drawSense(PainterQueue painterQueue, Camera camera) {
         if (sense.sound)
-            DrawUtil.drawCubeFromCenter(painterQueue, camera, x + sense.soundDirX, y + sense.soundDirY, .25, Color.LIGHT_GRAY, Color.LIGHT_GRAY, PainterQueue.SENSE_TOP_LAYER, PainterQueue.SENSE_SIDE_LAYER);
+            DrawUtil.drawCubeFromCenter(painterQueue, camera, x + sense.soundDirX, y + sense.soundDirY, .25, Color.RED, Color.RED, PainterQueue.SENSE_TOP_LAYER, PainterQueue.SENSE_SIDE_LAYER);
         if (sense.smell)
             DrawUtil.drawCubeFromCenter(painterQueue, camera, sense.smellX, sense.smellY, .25, Color.WHITE, Color.WHITE, PainterQueue.SENSE_TOP_LAYER, PainterQueue.SENSE_SIDE_LAYER);
     }
@@ -102,5 +113,17 @@ public class Character implements Follow, HouseCharacter {
 
     public double getY() {
         return y;
+    }
+
+    public void setDirX(double dirX) {
+        this.dirX = dirX;
+    }
+
+    public void setDirY(double dirY) {
+        this.dirY = dirY;
+    }
+
+    public void setRun(boolean run) {
+        this.run = run;
     }
 }

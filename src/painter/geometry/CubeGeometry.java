@@ -1,4 +1,4 @@
-package geometry;
+package painter.geometry;
 
 import camera.Camera;
 

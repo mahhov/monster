@@ -1,4 +1,4 @@
-package geometry;
+package painter.geometry;
 
 import java.util.Iterator;
 
@@ -6,7 +6,7 @@ public class CoordinateGroup implements Iterable<Coordinate> {
     private Coordinate[] coordinates;
     private int size;
 
-    public CoordinateGroup(int size) {
+    CoordinateGroup(int size) {
         coordinates = new Coordinate[size];
     }
 
@@ -40,11 +40,11 @@ public class CoordinateGroup implements Iterable<Coordinate> {
         return coordinates;
     }
 
-    public Coordinate getCoordinate(int i) {
+    Coordinate getCoordinate(int i) {
         return coordinates[i];
     }
 
-    public void addCoordinate(Coordinate coordinate) {
+    void addCoordinate(Coordinate coordinate) {
         coordinates[size++] = coordinate;
     }
 

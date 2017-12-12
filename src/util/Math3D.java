@@ -42,6 +42,10 @@ public class Math3D {
         return java.lang.Math.sqrt(x * x + y * y);
     }
 
+    public static double magnitudeSquared(double x, double y) {
+        return x * x + y * y;
+    }
+
     public static double[] setMagnitude(double x, double y, double mag) {
         double m = magnitude(x, y) / mag;
         if (m == 0)

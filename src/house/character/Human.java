@@ -1,8 +1,6 @@
 package house.character;
 
-import controller.Controller;
-import geometry.Coordinate;
-import house.House;
+import painter.geometry.Coordinate;
 
 import java.awt.*;
 
@@ -14,9 +12,5 @@ public class Human extends Character {
 
     public Human(Coordinate spawn) {
         super(true, COLOR_TOP, COLOR_SIDE, WALK_SPEED, RUN_SPEED, spawn, SMELL_DISTANCE, SOUND_WALK_DISTANCE, SOUND_RUN_DISTANCE);
-    }
-
-    public void update(House house, Controller controller, Character otherCharacter) {
-        super.update(house, controller, otherCharacter);
     }
 }

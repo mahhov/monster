@@ -1,4 +1,4 @@
-package util.intersection;
+package util.map.intersectionfinder;
 
 public class Intersection {
     private double x, y;

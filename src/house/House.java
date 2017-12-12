@@ -7,8 +7,9 @@ import house.character.Monster;
 import painter.painterelement.PainterQueue;
 import util.DrawUtil;
 import util.LList;
-import util.intersection.IntersectionFinder;
-import util.intersection.Map;
+import util.map.Map;
+import util.map.intersectionfinder.IntersectionFinder;
+import util.map.pather.Pather;
 
 import java.awt.*;
 
@@ -16,6 +17,7 @@ public class House implements Map {
     private boolean[][] walls;
     private LList<HouseElement> elements;
     private IntersectionFinder intersectionFinder;
+    private Pather pather;
     private Human human;
     private Monster monster;
     private Exit exit;
@@ -24,6 +26,7 @@ public class House implements Map {
         this.walls = walls;
         elements = new LList<>();
         intersectionFinder = new IntersectionFinder(this);
+        pather = new Pather(this);
     }
 
     public void addElement(HouseElement element) {
@@ -51,6 +54,10 @@ public class House implements Map {
 
     public IntersectionFinder getIntersectionFinder() {
         return intersectionFinder;
+    }
+
+    public Pather getPather() {
+        return pather;
     }
 
     public int getWidth() {

@@ -1,7 +1,7 @@
 package util;
 
 import camera.Camera;
-import geometry.CubeGeometry;
+import painter.geometry.CubeGeometry;
 import painter.painterelement.PainterPolygon;
 import painter.painterelement.PainterQueue;
 

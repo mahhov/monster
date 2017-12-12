@@ -1,4 +1,4 @@
-package geometry;
+package painter.geometry;
 
 public class Coordinate {
     private double x, y;
@@ -12,15 +12,15 @@ public class Coordinate {
         return new int[] {(int) (x * scale + shift), (int) (y * scale + shift)};
     }
 
-    public boolean isInView() {
+    boolean isInView() {
         return x >= -.5 && x <= .5 && y >= -.5 && y <= .5;
     }
 
-    public boolean isInViewX() {
+    boolean isInViewX() {
         return x >= -.5 && x <= .5;
     }
 
-    public boolean isInViewY() {
+    boolean isInViewY() {
         return y >= -.5 && y <= .5;
     }
 
