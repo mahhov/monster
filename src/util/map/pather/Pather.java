@@ -1,6 +1,5 @@
 package util.map.pather;
 
-import util.Math3D;
 import util.map.Map;
 
 import java.util.ArrayList;
@@ -118,27 +117,21 @@ public class Pather {
                 return reconstructPath();
 
             openCount--;
-            currentNode.open = false;
-            currentNode.closed = true;
+            currentNode.close();
 
             for (Edge edge : currentNode.edges) {
                 Node neighborNode = edge.findNeigbhor(currentNode);
 
-                if (neighborNode.closed)
+                if (neighborNode.isClosed())
                     continue;
 
-                if (!neighborNode.open) {
+                if (!neighborNode.isOpen()) {
                     openCount++;
-                    neighborNode.open = true;
+                    neighborNode.open();
                 }
 
-                double g = currentNode.g + edge.getDistance();
-                if (g >= neighborNode.g)
-                    continue;
-
-                neighborNode.cameFrom = currentNode;
-                neighborNode.g = g;
-                neighborNode.f = g + getH(neighborNode.coordinate);
+                double g = currentNode.getG() + edge.getDistance();
+                neighborNode.updateNode(currentNode, g, end);
             }
         }
 
@@ -146,30 +139,20 @@ public class Pather {
     }
 
     private void prepareGraphForAStar() {
-        for (Node node : graph.nodes) {
-            node.cameFrom = null;
-            node.g = Double.MAX_VALUE;
-            node.f = Double.MAX_VALUE;
-            node.open = false;
-            node.closed = false;
-        }
+        for (Node node : graph.nodes)
+            node.reset();
 
-        startNode.g = 0;
-        startNode.f = getH(startNode.coordinate);
-        startNode.open = true;
+        startNode.updateNode(null, 0, end);
+        startNode.open();
         openCount = 1;
     }
 
     private Node getNodeWithSmallestF() { // todo: make more efficient
         Node current = null;
         for (Node node : graph.nodes)
-            if (node.open && (current == null || node.f < current.f))
+            if (node.isOpen() && (current == null || node.getF() < current.getF()))
                 current = node;
         return current;
-    }
-
-    private double getH(Coordinate coordinate) {
-        return Math3D.magnitude(coordinate.getX() - end.getX(), coordinate.getY() - end.getY());
     }
 
     private ArrayList<Node> reconstructPath() {
@@ -179,7 +162,7 @@ public class Pather {
 
         do {
             path.add(currentNode);
-            currentNode = currentNode.cameFrom;
+            currentNode = currentNode.getCameFrom();
         } while (currentNode != null);
 
         return path;
