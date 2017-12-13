@@ -122,7 +122,7 @@ public class Pather {
             currentNode.closed = true;
 
             for (Edge edge : currentNode.edges) {
-                Node neighborNode = edge.node1 == currentNode ? edge.node2 : edge.node1;
+                Node neighborNode = edge.findNeigbhor(currentNode);
 
                 if (neighborNode.closed)
                     continue;
@@ -132,7 +132,7 @@ public class Pather {
                     neighborNode.open = true;
                 }
 
-                double g = currentNode.g + edge.distance;
+                double g = currentNode.g + edge.getDistance();
                 if (g >= neighborNode.g)
                     continue;
 

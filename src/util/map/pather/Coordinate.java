@@ -1,6 +1,6 @@
 package util.map.pather;
 
-class Coordinate { // todo cleanup
+class Coordinate {
     private int x, y;
 
     Coordinate(int x, int y) {
@@ -10,14 +10,6 @@ class Coordinate { // todo cleanup
 
     Coordinate modify(int dx, int dy) {
         return new Coordinate(x + dx, y + dy);
-    }
-
-    boolean equals(int x, int y) {
-        return x == this.x && y == this.y;
-    }
-
-    boolean equals(Coordinate compare) {
-        return x == compare.x && y == compare.y;
     }
 
     int getX() {
