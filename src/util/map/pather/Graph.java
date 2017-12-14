@@ -3,7 +3,8 @@ package util.map.pather;
 import java.util.ArrayList;
 
 class Graph { // todo cleanup
-    ArrayList<Node> nodes; // todo make more efficient than arraylist
+    ArrayList<Node> nodes;
+    private ArrayList<Node> openNodes;
 
     Graph() {
         nodes = new ArrayList<>();
@@ -29,5 +30,33 @@ class Graph { // todo cleanup
         Edge edge = new Edge(node1, node2);
         node1.edges.add(edge);
         node2.edges.add(edge);
+    }
+
+    void reset() {
+        openNodes = new ArrayList<>();
+        for (Node node : nodes)
+            node.reset();
+    }
+
+    boolean hasOpenNode() {
+        return !openNodes.isEmpty();
+    }
+
+    void openNode(Node node) {
+        openNodes.add(node);
+        node.open();
+    }
+
+    void closeNode(Node node) {
+        openNodes.remove(node);
+        node.close();
+    }
+
+    Node getNodeWithSmallestF() {
+        Node current = null;
+        for (Node node : openNodes)
+            if (current == null || node.getF() < current.getF())
+                current = node;
+        return current;
     }
 }

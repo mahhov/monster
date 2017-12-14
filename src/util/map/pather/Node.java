@@ -58,7 +58,6 @@ class Node {
     }
 
     void close() {
-        open = false;
         closed = true;
     }
 }

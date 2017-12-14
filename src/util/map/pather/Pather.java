@@ -8,7 +8,6 @@ public class Pather {
     private Graph graph;
     private Coordinate start, end;
     private Node startNode, endNode;
-    private int openCount;
     private IntersectionFinder intersectionFinder;
     private Map map;
 
@@ -108,14 +107,13 @@ public class Pather {
     }
 
     private ArrayList<Node> aStar() {
-        while (openCount > 0) {
-            Node currentNode = getNodeWithSmallestF();
+        while (graph.hasOpenNode()) {
+            Node currentNode = graph.getNodeWithSmallestF();
 
             if (currentNode == endNode)
                 return reconstructPath();
 
-            openCount--;
-            currentNode.close();
+            graph.closeNode(currentNode);
 
             for (Edge edge : currentNode.edges) {
                 Node neighborNode = edge.findNeigbhor(currentNode);
@@ -123,10 +121,8 @@ public class Pather {
                 if (neighborNode.isClosed())
                     continue;
 
-                if (!neighborNode.isOpen()) {
-                    openCount++;
-                    neighborNode.open();
-                }
+                if (!neighborNode.isOpen())
+                    graph.openNode(neighborNode);
 
                 double g = currentNode.getG() + edge.getDistance();
                 neighborNode.updateNode(currentNode, g, end);
@@ -137,20 +133,9 @@ public class Pather {
     }
 
     private void prepareGraphForAStar() {
-        for (Node node : graph.nodes)
-            node.reset();
-
+        graph.reset();
         startNode.updateNode(null, 0, end);
-        startNode.open();
-        openCount = 1;
-    }
-
-    private Node getNodeWithSmallestF() { // todo: make more efficient
-        Node current = null;
-        for (Node node : graph.nodes)
-            if (node.isOpen() && (current == null || node.getF() < current.getF()))
-                current = node;
-        return current;
+        graph.openNode(startNode);
     }
 
     private ArrayList<Node> reconstructPath() {
