@@ -97,10 +97,11 @@ public class HouseGenerator {
 
     private void findSpawns() {
         spawns = new Coordinate[3];
-        int j = 0;
+        int j = -1;
         for (int i = 0; i < spawns.length; i++) {
-            while (!rooms[j].isConnected())
+            do
                 j++;
+            while (!rooms[j].isConnected());
             spawns[i] = new Coordinate(rooms[j].getX(), rooms[j].getY());
         }
     }
