@@ -23,7 +23,7 @@ public class Character implements Follow, HouseCharacter {
     private double dirX, dirY;
     private boolean run;
 
-    private double smellDistance, soundWalkDistance, soundRunDistance;
+    private double smellDistance, soundWalkDistanceSqr, soundRunDistanceSqr;
     Sense sense;
 
     Character(boolean main, Color colorTop, Color colorSide, double walkSpeed, double runSpeed, Coordinate spawn, double smellDistance, double soundWalkDistance, double soundRunDistance) {
@@ -35,8 +35,8 @@ public class Character implements Follow, HouseCharacter {
         x = spawn.getX();
         y = spawn.getY();
         this.smellDistance = smellDistance;
-        this.soundWalkDistance = soundWalkDistance;
-        this.soundRunDistance = soundRunDistance;
+        soundWalkDistanceSqr = soundWalkDistance * soundWalkDistance;
+        soundRunDistanceSqr = soundRunDistance * soundRunDistance;
         sense = new Sense();
     }
 
@@ -79,7 +79,7 @@ public class Character implements Follow, HouseCharacter {
 
     private void setSense(Character source) {
         double distance = getDistance(source.getX(), source.getY());
-        if (source.run && distance < source.soundRunDistance || distance < source.soundWalkDistance)
+        if (source.run && distance < source.soundRunDistanceSqr || distance < source.soundWalkDistanceSqr)
             sense.setSound(this, source);
         else
             sense.clearSound();
@@ -89,8 +89,8 @@ public class Character implements Follow, HouseCharacter {
             sense.clearSmell();
     }
 
-    double getDistance(double x, double y) {
-        return Math3D.magnitude(x - this.x, y - this.y); // todo: convert to magSquared
+    private double getDistance(double x, double y) {
+        return Math3D.magnitudeSqr(x - this.x, y - this.y);
     }
 
     public void draw(PainterQueue painterQueue, Camera camera) {

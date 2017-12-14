@@ -34,10 +34,8 @@ public class Pather {
         pathNodes = aStar();
         if (pathNodes != null)
             path = new Path(pathNodes);
-        else {
-            System.out.println("NO PATH POSSIBLE");
+        else
             path = Path.EMPTY_PATH;
-        }
         unappendEndpoints();
         return path;
     }

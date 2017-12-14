@@ -20,7 +20,7 @@ public class Path {
     }
 
     public void update(double x, double y) {
-        if (Math3D.magnitudeSquared(x - getX(), y - getY()) < 1)
+        if (Math3D.magnitudeSqr(x - getX(), y - getY()) < 1)
             current++;
     }
 
