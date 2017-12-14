@@ -46,7 +46,7 @@ public class IntersectionFinder { // todo : clean up + temp vars
         while (!done) {
             double edge = x - halfSize;
             int intEdge = (int) (edge - Math3D.EPSILON);
-            if (map.isMoveable(intEdge, intTopY) && map.isMoveable(intEdge, intBottomY)) {
+            if (map.isInBoundsMoveable(intEdge, intTopY) && map.isInBoundsMoveable(intEdge, intBottomY)) {
                 double delta = edge - intEdge;
                 if (delta > maxDelta) {
                     x -= maxDelta;
@@ -65,7 +65,7 @@ public class IntersectionFinder { // todo : clean up + temp vars
         while (!done) {
             double edge = x + halfSize;
             int intEdge = (int) (edge + Math3D.EPSILON);
-            if (map.isMoveable(intEdge, intTopY) && map.isMoveable(intEdge, intBottomY)) {
+            if (map.isInBoundsMoveable(intEdge, intTopY) && map.isInBoundsMoveable(intEdge, intBottomY)) {
                 double delta = intEdge - edge + 1;
                 if (delta > maxDelta) {
                     x += maxDelta;
@@ -85,7 +85,7 @@ public class IntersectionFinder { // todo : clean up + temp vars
         while (!done) {
             double edge = y - halfSize;
             int intEdge = (int) (edge - Math3D.EPSILON);
-            if (map.isMoveable(intLeftX, intEdge) && map.isMoveable(intRightX, intEdge)) {
+            if (map.isInBoundsMoveable(intLeftX, intEdge) && map.isInBoundsMoveable(intRightX, intEdge)) {
                 double delta = edge - intEdge;
                 if (delta > maxDelta) {
                     y -= maxDelta;
@@ -104,7 +104,7 @@ public class IntersectionFinder { // todo : clean up + temp vars
         while (!done) {
             double edge = y + halfSize;
             int intEdge = (int) (edge + Math3D.EPSILON);
-            if (map.isMoveable(intLeftX, intEdge) && map.isMoveable(intRightX, intEdge)) {
+            if (map.isInBoundsMoveable(intLeftX, intEdge) && map.isInBoundsMoveable(intRightX, intEdge)) {
                 double delta = intEdge - edge + 1;
                 if (delta > maxDelta) {
                     y += maxDelta;
