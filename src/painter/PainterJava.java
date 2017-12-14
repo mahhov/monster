@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 public class PainterJava implements Painter {
     private static final CoordinateGroup FULL_COORDINATES = new CoordinateGroup(new Coordinate[] {new Coordinate(-.5, -.5), new Coordinate(.5, .5)});
 
-    private final JFrame jframe;
+    private final JFrame jframe; // todo why is this yellow
     private final int FRAME_SIZE, IMAGE_SIZE;
     private static int borderSize = 0;
     private BufferedImage canvas;

@@ -5,7 +5,7 @@ import util.LList;
 
 public class PainterQueue extends PainterElement {
     private static final int NUM_LAYERS = 6;
-    public static final int
+    public static final int // todo : can we make this private?
             WALL_SIDE_LAYER = 0, WALL_TOP_LAYER = 1,
             CHARACTER_SIDE_LAYER = 2, CHARACTER_TOP_LAYER = 3,
             SENSE_TOP_LAYER = 4, SENSE_SIDE_LAYER = 5;
@@ -38,11 +38,11 @@ public class PainterQueue extends PainterElement {
 
         public Layer() {
             tailElement = elements = new LList<>();
-        }
+        } // todo : can we make this private?
 
         public void add(PainterElement e) {
             elements = elements.add(e);
-        }
+        } // todo : can we make this private?
 
         public void draw(Painter painter) {
             for (LList<PainterElement> e : tailElement.reverseIterator())

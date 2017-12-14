@@ -2,7 +2,7 @@ package house.character;
 
 import util.Math3D;
 
-class Sense {
+class Sense { // todo private member fields
     boolean smell, sound;
     double soundDirX, soundDirY;
     double smellX, smellY;

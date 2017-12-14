@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public final class LList<T> implements Iterable<LList<T>> {
     private LList<T> next, prev;
-    public T node;
+    public T node; // todo make private
 
     public LList() {
     }
@@ -40,7 +40,7 @@ public final class LList<T> implements Iterable<LList<T>> {
     }
 
     private final class LListIterator implements Iterator<LList<T>> {
-        LList<T> cur;
+        LList<T> cur; // todo: private
 
         LListIterator() {
             cur = LList.this;
@@ -58,7 +58,7 @@ public final class LList<T> implements Iterable<LList<T>> {
     }
 
     private final class LListReverseIterator implements Iterator<LList<T>> {
-        LList<T> cur;
+        LList<T> cur; // todo: private
 
         LListReverseIterator() {
             cur = LList.this.prev;

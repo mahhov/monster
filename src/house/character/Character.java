@@ -24,7 +24,7 @@ public class Character implements Follow, HouseCharacter {
     private boolean run;
 
     private double smellDistance, soundWalkDistanceSqr, soundRunDistanceSqr;
-    Sense sense;
+    Sense sense; // todo can we make this private
 
     Character(boolean main, Color colorTop, Color colorSide, double walkSpeed, double runSpeed, Coordinate spawn, double smellDistance, double soundWalkDistance, double soundRunDistance) {
         this.main = main;
