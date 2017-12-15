@@ -1,10 +1,12 @@
 package util.map.pather;
 
+import util.Heap;
+
 import java.util.ArrayList;
 
 class Graph { // todo cleanup
     ArrayList<Node> nodes;
-    private ArrayList<Node> openNodes;
+    private Heap<Node> openNodes;
 
     Graph() {
         nodes = new ArrayList<>();
@@ -33,7 +35,7 @@ class Graph { // todo cleanup
     }
 
     void reset() {
-        openNodes = new ArrayList<>();
+        openNodes = new Heap<>(nodes.size());
         for (Node node : nodes)
             node.reset();
     }
@@ -43,20 +45,13 @@ class Graph { // todo cleanup
     }
 
     void openNode(Node node) {
-        openNodes.add(node);
+        openNodes.insert(node);
         node.open();
     }
 
-    void closeNode(Node node) {
-        openNodes.remove(node);
+    Node getOpenNodeWithSmallestF() {
+        Node node = openNodes.removeSmallest();
         node.close();
-    }
-
-    Node getNodeWithSmallestF() {
-        Node current = null;
-        for (Node node : openNodes)
-            if (current == null || node.getF() < current.getF())
-                current = node;
-        return current;
+        return node;
     }
 }

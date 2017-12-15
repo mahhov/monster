@@ -27,12 +27,24 @@ public class Heap<T extends Comparable<T>> {
         while (true) {
             int left = getLeft(current);
             int right = getRight(current);
-            int smallestChild = getValue(left).compareTo(getValue(right)) < 0 ? left : right;
+            int smallestChild;
+            if (left > size && right > size)
+                return r;
+            else if (left > size)
+                smallestChild = right;
+            else if (right > size)
+                smallestChild = left;
+            else
+                smallestChild = getValue(left).compareTo(getValue(right)) < 0 ? left : right;
             if (getValue(current).compareTo(getValue(smallestChild)) <= 0)
                 return r;
             swap(current, smallestChild);
             current = smallestChild;
         }
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     private void swap(int i, int j) {

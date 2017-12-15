@@ -108,12 +108,10 @@ public class Pather {
 
     private ArrayList<Node> aStar() {
         while (graph.hasOpenNode()) {
-            Node currentNode = graph.getNodeWithSmallestF();
+            Node currentNode = graph.getOpenNodeWithSmallestF();
 
             if (currentNode == endNode)
                 return reconstructPath();
-
-            graph.closeNode(currentNode);
 
             for (Edge edge : currentNode.edges) {
                 Node neighborNode = edge.findNeigbhor(currentNode);

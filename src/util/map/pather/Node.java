@@ -4,7 +4,7 @@ import util.Math3D;
 
 import java.util.ArrayList;
 
-class Node {
+class Node implements Comparable<Node> {
     Coordinate coordinate;
     ArrayList<Edge> edges = new ArrayList<>(); // todo make private
     private Node cameFrom;
@@ -59,5 +59,9 @@ class Node {
 
     void close() {
         closed = true;
+    }
+
+    public int compareTo(Node o) {
+        return f == o.f ? 0 : (f > o.f ? 1 : -1);
     }
 }
