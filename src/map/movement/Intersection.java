@@ -1,4 +1,4 @@
-package util.map.intersectionfinder;
+package map.movement;
 
 public class Intersection {
     private double x, y;

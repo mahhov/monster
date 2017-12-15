@@ -34,10 +34,10 @@ public class Engine implements Runnable {
     private void createHouse() {
         HouseGenerator houseGenerator = new HouseGenerator();
         houseGenerator.generate();
-        
+
         Human human = new Human(houseGenerator.getSpawn(0));
         Monster monster = new Monster(houseGenerator.getSpawn(1));
-        
+
         house = new House(houseGenerator.getWalls());
         house.setHuman(human);
         house.setMonster(monster);

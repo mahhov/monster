@@ -1,7 +1,7 @@
-package util.map.pather;
+package map.pather;
 
 import util.Math3D;
-import util.map.Map;
+import map.Map;
 
 class IntersectionFinder {
     private Map map;

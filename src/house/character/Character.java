@@ -9,7 +9,7 @@ import painter.geometry.Coordinate;
 import painter.painterelement.PainterQueue;
 import util.DrawUtil;
 import util.Math3D;
-import util.map.intersectionfinder.Intersection;
+import map.movement.Intersection;
 
 import java.awt.*;
 

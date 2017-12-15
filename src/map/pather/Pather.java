@@ -1,6 +1,6 @@
-package util.map.pather;
+package map.pather;
 
-import util.map.Map;
+import map.Map;
 
 import java.util.ArrayList;
 

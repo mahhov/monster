@@ -1,4 +1,4 @@
-package util.map.pather;
+package map.pather;
 
 import util.Heap;
 

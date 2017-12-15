@@ -1,4 +1,4 @@
-package util.map;
+package map;
 
 public interface Map {
     int getWidth();

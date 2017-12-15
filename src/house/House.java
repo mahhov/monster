@@ -7,9 +7,9 @@ import house.character.Monster;
 import painter.painterelement.PainterQueue;
 import util.DrawUtil;
 import util.LList;
-import util.map.Map;
-import util.map.intersectionfinder.IntersectionFinder;
-import util.map.pather.Pather;
+import map.Map;
+import map.movement.IntersectionFinder;
+import map.pather.Pather;
 
 import java.awt.*;
 

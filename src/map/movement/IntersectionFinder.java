@@ -1,7 +1,7 @@
-package util.map.intersectionfinder;
+package map.movement;
 
+import map.Map;
 import util.Math3D;
-import util.map.Map;
 
 public class IntersectionFinder { // todo : clean up + temp vars
     private double x, y;

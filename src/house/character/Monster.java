@@ -3,7 +3,7 @@ package house.character;
 import house.House;
 import painter.geometry.Coordinate;
 import util.Math3D;
-import util.map.pather.Path;
+import map.pather.Path;
 
 import java.awt.*;
 
