@@ -1,6 +1,5 @@
-package map.pather;
+package map.lighting;
 
-import map.Coordinate;
 import map.Map;
 import util.Math3D;
 
@@ -18,15 +17,18 @@ class IntersectionFinder {
         this.map = map;
     }
 
-    boolean intersects(Coordinate start, Coordinate end) {
-        x = start.getX() + .5;
-        y = start.getY() + .5;
+    boolean intersects(int srcX, int srcY, int destX, int destY) {
+        x = srcX + .5;
+        y = srcY + .5;
 
-        dirX = end.getX() - start.getX();
-        dirY = end.getY() - start.getY();
+        dirX = destX - srcX;
+        dirY = destY - srcY;
 
         checkDx = dirX < 0 ? .1 : -.1;
         checkDy = dirY < 0 ? .1 : -.1;
+
+        dirX += 5 * checkDx;
+        dirY += 5 * checkDy;
 
         totalMoved = 0;
         totalToMove = Math3D.magnitude(dirX, dirY);
@@ -47,9 +49,7 @@ class IntersectionFinder {
             x += dirX * move;
             y += dirY * move;
 
-            if (!map.isInBoundsMoveable((int) x, (int) y) ||
-                    !map.isInBoundsMoveable((int) (x + checkDx), (int) y) ||
-                    !map.isInBoundsMoveable((int) x, (int) (y + checkDy)))
+            if (!map.isInBoundsMoveable((int) x, (int) y))
                 return true;
         }
     }

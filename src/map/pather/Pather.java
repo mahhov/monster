@@ -89,8 +89,8 @@ public class Pather {
     }
 
     private boolean connectedGraphNodes(int i, int j) {
-        Coordinate a = graph.nodes.get(i).coordinate;
-        Coordinate b = graph.nodes.get(j).coordinate;
+        map.Coordinate a = graph.nodes.get(i).coordinate;
+        map.Coordinate b = graph.nodes.get(j).coordinate;
         return !intersectionFinder.intersects(a, b);
     }
 

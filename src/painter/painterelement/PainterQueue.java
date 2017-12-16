@@ -4,11 +4,22 @@ import painter.Painter;
 import util.LList;
 
 public class PainterQueue extends PainterElement {
-    private static final int NUM_LAYERS = 6;
-    public static final int // todo : can we make this private?
-            WALL_SIDE_LAYER = 0, WALL_TOP_LAYER = 1,
-            CHARACTER_SIDE_LAYER = 2, CHARACTER_TOP_LAYER = 3,
-            SENSE_TOP_LAYER = 4, SENSE_SIDE_LAYER = 5;
+    private static final int NUM_LAYERS = 7;
+    public static final int
+            FLOOR_LAYER, WALL_SIDE_LAYER, WALL_TOP_LAYER,
+            CHARACTER_SIDE_LAYER, CHARACTER_TOP_LAYER,
+            SENSE_TOP_LAYER, SENSE_SIDE_LAYER;
+
+    static {
+        int i = 0;
+        FLOOR_LAYER = i++;
+        WALL_SIDE_LAYER = i++;
+        WALL_TOP_LAYER = i++;
+        CHARACTER_SIDE_LAYER = i++;
+        CHARACTER_TOP_LAYER = i++;
+        SENSE_TOP_LAYER = i++;
+        SENSE_SIDE_LAYER = i++;
+    }
 
     private Layer[] layers;
     public boolean drawReady;

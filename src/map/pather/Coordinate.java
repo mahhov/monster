@@ -1,22 +1,11 @@
 package map.pather;
 
-class Coordinate {
-    private int x, y;
-
+class Coordinate extends map.Coordinate {
     Coordinate(int x, int y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
     }
 
     Coordinate modify(int dx, int dy) {
-        return new Coordinate(x + dx, y + dy);
-    }
-
-    int getX() {
-        return x;
-    }
-
-    int getY() {
-        return y;
+        return new Coordinate(getX() + dx, getY() + dy);
     }
 }

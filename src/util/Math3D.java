@@ -22,6 +22,10 @@ public class Math3D {
         return val;
     }
 
+    public static double minMax(double val, double min, double max) {
+        return val < min ? min : (val > max ? max : val);
+    }
+
     public static int abs(int value) {
         return value > 0 ? value : -value;
     }
