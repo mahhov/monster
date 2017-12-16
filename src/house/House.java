@@ -18,7 +18,7 @@ import java.awt.*;
 public class House implements Map {
     private static final Color FLOOR_COLOR = new Color(200, 255, 200), WALL_SIDE_COLOR = Color.LIGHT_GRAY, WALL_TOP_COLOR = Color.GRAY;
     private boolean[][] walls;
-    private LList<HouseElement> elements;
+    private LList<HouseDrawable> houseDrawables;
     private IntersectionFinder intersectionFinder;
     private Pather pather;
     private Lighter lighter;
@@ -29,31 +29,28 @@ public class House implements Map {
 
     public House(boolean[][] walls) {
         this.walls = walls;
-        elements = new LList<>();
+        houseDrawables = new LList<>();
         intersectionFinder = new IntersectionFinder(this);
         pather = new Pather(this);
         lighter = new Lighter(this);
     }
 
-    public void addElement(HouseElement element) {
-        elements = elements.add(element);
-    }
-
     public void setHuman(Human human) {
         this.human = human;
+        houseDrawables = houseDrawables.add(human);
     }
 
     public void setMonster(Monster monster) {
         this.monster = monster;
+        houseDrawables = houseDrawables.add(monster);
     }
 
     public void setExit(Exit exit) {
         this.exit = exit;
+        houseDrawables = houseDrawables.add(exit);
     }
 
     public void update(Controller controller) {
-        for (LList<HouseElement> element : elements)
-            element.node.update(this);
         human.update(this, controller, monster);
         monster.update(this, controller, human);
         light = lighter.calculateLight(human.getX(), human.getY());
@@ -87,11 +84,8 @@ public class House implements Map {
                 else
                     DrawUtil.drawRectFromCorner(painterQueue, camera, x, y, 1, light.getValue(x, y), FLOOR_COLOR, PainterQueue.FLOOR_LAYER);
 
-        for (LList<HouseElement> element : elements)
-            element.node.draw(painterQueue, camera);
-
-        human.draw(painterQueue, camera);
-        monster.draw(painterQueue, camera);
-        exit.draw(painterQueue, camera);
+        for (LList<HouseDrawable> houseDrawable : houseDrawables)
+            if (light.lighted((int) houseDrawable.node.getX(), (int) houseDrawable.node.getY()))
+                houseDrawable.node.draw(painterQueue, camera);
     }
 }

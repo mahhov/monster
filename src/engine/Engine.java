@@ -98,3 +98,5 @@ public class Engine implements Runnable {
 // todo monster ai
 // todo light
 // todo exit win condition
+// todo multiple light sources generated from house
+// todo redo senses

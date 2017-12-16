@@ -115,15 +115,15 @@ public class Character implements Follow, HouseCharacter {
         return y;
     }
 
-    public void setDirX(double dirX) {
+    void setDirX(double dirX) {
         this.dirX = dirX;
     }
 
-    public void setDirY(double dirY) {
+    void setDirY(double dirY) {
         this.dirY = dirY;
     }
 
-    public void setRun(boolean run) {
+    void setRun(boolean run) {
         this.run = run;
     }
 }

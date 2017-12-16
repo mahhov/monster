@@ -25,4 +25,8 @@ public class Matrix {
     public double getValue(int x, int y) {
         return updated[x][y] == current ? value[x][y] : defaultValue;
     }
+
+    public boolean lighted(int x, int y) {
+        return updated[x][y] == current && value[x][y] > defaultValue;
+    }
 }
