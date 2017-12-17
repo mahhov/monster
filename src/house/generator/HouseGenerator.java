@@ -8,7 +8,7 @@ public class HouseGenerator {
     private static final int MIN_ROOM_SIZE = 5, MAX_ROOM_SIZE = 12;
     private static final int NUM_ROOMS = 1000;
     private static final int NUM_CONNECTIONS = 1000, MAX_CONNECTION_LENGTH = 10;
-    private static final int NUM_LIGHTS = 100;
+    private static final int NUM_LIGHTS = 0;
     private Room[] rooms;
     private int roomCount;
     private boolean[][] walls;

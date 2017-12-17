@@ -55,7 +55,7 @@ public class Engine implements Runnable {
         int frame = 0, engineFrame = 0;
         long beginTime = 0, endTime;
 
-        while (true) {
+        while (!house.done()) {
             checkPause();
             while (pause) {
                 checkPause();
@@ -68,7 +68,6 @@ public class Engine implements Runnable {
             if (painter.isPainterQueueDone()) {
                 PainterQueue painterQueue = new PainterQueue();
                 house.draw(painterQueue, camera);
-                painterQueue.drawReady = true;
                 painter.setPainterQueue(painterQueue);
                 frame++;
             }
@@ -83,6 +82,15 @@ public class Engine implements Runnable {
                 beginTime = endTime;
             }
         }
+
+        // victory
+        PainterQueue painterQueue = new PainterQueue();
+        house.draw(painterQueue, camera);
+        house.drawVictory(painterQueue);
+        painter.setPainterQueue(painterQueue);
+        while (true) {
+            Math3D.sleep(30);
+        }
     }
 
     private void checkPause() {
@@ -95,7 +103,4 @@ public class Engine implements Runnable {
     }
 }
 
-// todo monster ai
-// todo exit win condition
-// todo multiple light sources generated from house
 // todo redo senses

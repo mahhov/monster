@@ -114,6 +114,7 @@ public class PainterJava implements Painter {
     }
 
     public void setPainterQueue(PainterQueue painterQueue) {
+        painterQueue.drawReady = true;
         this.painterQueue = painterQueue;
     }
 

@@ -10,6 +10,7 @@ import map.movement.IntersectionFinder;
 import map.pather.Pather;
 import painter.geometry.Coordinate;
 import painter.painterelement.PainterQueue;
+import painter.painterelement.PainterText;
 import util.DrawUtil;
 import util.LList;
 import util.Math3D;
@@ -19,6 +20,9 @@ import java.awt.*;
 
 public class House implements Map {
     private static final Color FLOOR_COLOR = new Color(200, 255, 200), WALL_SIDE_COLOR = Color.LIGHT_GRAY, WALL_TOP_COLOR = Color.GRAY;
+    private static final int VICTORY_HUMAN = 1, VICTORY_MONSTER = 2;
+    private static final double VICTORY_DISTANCE = 2;
+    private int victory;
     private boolean[][] walls;
     private LList<HouseDrawable> houseDrawables;
     private IntersectionFinder intersectionFinder;
@@ -60,8 +64,16 @@ public class House implements Map {
     public void update(Controller controller) {
         human.update(this, controller, monster);
         monster.update(this, controller, human);
+        testWinConditions();
         light.reset();
         lighter.calculateLight(human.getX(), human.getY(), light, 10); // todo make light range constant
+    }
+
+    private void testWinConditions() {
+        if (Math3D.magnitude(human.getX() - exit.getX(), human.getY() - exit.getY()) < VICTORY_DISTANCE)
+            victory = VICTORY_HUMAN;
+        else if (Math3D.magnitude(human.getX() - monster.getX(), human.getY() - monster.getY()) < VICTORY_DISTANCE)
+            victory = VICTORY_MONSTER;
     }
 
     public IntersectionFinder getIntersectionFinder() {
@@ -103,5 +115,14 @@ public class House implements Map {
 
     private boolean isLighted(int x, int y) {
         return light.lighted(x, y) || staticLight.lighted(x, y);
+    }
+
+    public boolean done() {
+        return victory != 0;
+    }
+
+    public void drawVictory(PainterQueue painterQueue) {
+        String victoryText = victory == VICTORY_MONSTER ? "MONSTER WINS" : "HUMAN WINS";
+        painterQueue.add(new PainterText(new Coordinate(.3, .3), Color.WHITE, victoryText), PainterQueue.TEXT_LAYER);
     }
 }
