@@ -50,13 +50,13 @@ public class PainterQueue extends PainterElement {
         private LList<PainterElement> elements;
         private LList<PainterElement> tailElement;
 
-        public Layer() {
+        private Layer() {
             tailElement = elements = new LList<>();
-        } // todo : can we make this private?
+        }
 
-        public void add(PainterElement e) {
+        private void add(PainterElement e) {
             elements = elements.add(e);
-        } // todo : can we make this private?
+        }
 
         public void draw(Painter painter) {
             for (LList<PainterElement> e : tailElement.reverseIterator())
