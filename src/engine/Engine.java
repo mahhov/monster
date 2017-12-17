@@ -52,15 +52,16 @@ public class Engine implements Runnable {
     }
 
     public void run() {
+        gameLoop();
+        victoryLoop();
+    }
+
+    private void gameLoop() {
         int frame = 0, engineFrame = 0;
         long beginTime = 0, endTime;
 
         while (!house.done()) {
-            checkPause();
-            while (pause) {
-                checkPause();
-                Math3D.sleep(30);
-            }
+            pauseLoop();
 
             camera.move(controller);
             house.update(controller);
@@ -82,13 +83,22 @@ public class Engine implements Runnable {
                 beginTime = endTime;
             }
         }
+    }
 
-        // victory
-        PainterQueue painterQueue = new PainterQueue();
-        house.draw(painterQueue, camera);
-        house.drawVictory(painterQueue);
-        painter.setPainterQueue(painterQueue);
+    private void pauseLoop() {
+        checkPause();
+        while (pause) {
+            checkPause();
+            Math3D.sleep(30);
+        }
+    }
+
+    private void victoryLoop() {
         while (true) {
+            PainterQueue painterQueue = new PainterQueue();
+            house.draw(painterQueue, camera);
+            house.drawVictory(painterQueue);
+            painter.setPainterQueue(painterQueue);
             Math3D.sleep(30);
         }
     }
