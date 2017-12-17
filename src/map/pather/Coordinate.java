@@ -1,6 +1,6 @@
 package map.pather;
 
-class Coordinate extends map.Coordinate {
+class Coordinate extends util.Coordinate {
     Coordinate(int x, int y) {
         super(x, y);
     }

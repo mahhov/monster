@@ -1,6 +1,6 @@
 package map.pather;
 
-import map.Coordinate;
+import util.Coordinate;
 import map.Map;
 import util.Math3D;
 

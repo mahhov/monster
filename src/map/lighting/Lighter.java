@@ -5,29 +5,27 @@ import util.Math3D;
 import util.Matrix;
 
 public class Lighter {
-    private static final int MAX_LIGHT_DISTANCE = 10;
-    private static final double MIN_LIGHT = .1, MAX_LIGHT = 1;
+    public static final double MIN_LIGHT = .1;
+    private static final double MAX_LIGHT = 1;
 
     private IntersectionFinder intersectionFinder;
     private Map map;
-    private Matrix light;
 
     // temp var
-    private int srcX, srcY;
+    private int srcX, srcY, lightRange;
     private int x, y, startX, endX, startY, endY;
     private double distance;
 
     public Lighter(Map map) {
         this.map = map;
         intersectionFinder = new IntersectionFinder(map);
-        light = new Matrix(map.getWidth(), map.getHeight(), MIN_LIGHT);
     }
 
-    public Matrix calculateLight(double srcX, double srcY) {
+    public void calculateLight(double srcX, double srcY, Matrix light, int lightRange) {
+        this.lightRange = lightRange;
         setRange((int) srcX, (int) srcY);
         srcX -= .5;
         srcY -= .5;
-        light.reset();
 
         for (x = startX; x <= endX; x++)
             for (y = startY; y <= endY; y++)
@@ -36,17 +34,15 @@ public class Lighter {
                     light.setValue(x, y, boundLight(lightValue()));
                 } else
                     light.setValue(x, y, boundLight(0));
-
-        return light;
     }
 
     private void setRange(int x, int y) {
         srcX = x;
         srcY = y;
-        startX = x - MAX_LIGHT_DISTANCE;
-        endX = x + MAX_LIGHT_DISTANCE;
-        startY = y - MAX_LIGHT_DISTANCE;
-        endY = y + MAX_LIGHT_DISTANCE;
+        startX = x - lightRange;
+        endX = x + lightRange;
+        startY = y - lightRange;
+        endY = y + lightRange;
         if (startX < 0)
             startX = 0;
         if (endX >= map.getWidth())
@@ -62,7 +58,7 @@ public class Lighter {
     }
 
     private double lightValue() {
-        return 1 - distance / MAX_LIGHT_DISTANCE;
+        return 1 - distance / lightRange;
     }
 
     private double boundLight(double light) {

@@ -8,9 +8,11 @@ import map.Map;
 import map.lighting.Lighter;
 import map.movement.IntersectionFinder;
 import map.pather.Pather;
+import painter.geometry.Coordinate;
 import painter.painterelement.PainterQueue;
 import util.DrawUtil;
 import util.LList;
+import util.Math3D;
 import util.Matrix;
 
 import java.awt.*;
@@ -23,16 +25,21 @@ public class House implements Map {
     private Pather pather;
     private Lighter lighter;
     private Matrix light;
+    private Matrix staticLight;
     private Human human;
     private Monster monster;
     private Exit exit;
 
-    public House(boolean[][] walls) {
+    public House(boolean[][] walls, Coordinate[] lights) {
         this.walls = walls;
         houseDrawables = new LList<>();
         intersectionFinder = new IntersectionFinder(this);
         pather = new Pather(this);
         lighter = new Lighter(this);
+        light = new Matrix(getWidth(), getHeight(), Lighter.MIN_LIGHT);
+        staticLight = new Matrix(getWidth(), getHeight(), Lighter.MIN_LIGHT);
+        for (Coordinate light : lights)
+            lighter.calculateLight(light.getX(), light.getY(), staticLight, 4); // todo make light range constant
     }
 
     public void setHuman(Human human) {
@@ -53,7 +60,8 @@ public class House implements Map {
     public void update(Controller controller) {
         human.update(this, controller, monster);
         monster.update(this, controller, human);
-        light = lighter.calculateLight(human.getX(), human.getY());
+        light.reset();
+        lighter.calculateLight(human.getX(), human.getY(), light, 10); // todo make light range constant
     }
 
     public IntersectionFinder getIntersectionFinder() {
@@ -80,12 +88,20 @@ public class House implements Map {
         for (int x = 0; x < walls.length; x++)
             for (int y = 0; y < walls[0].length; y++)
                 if (walls[x][y])
-                    DrawUtil.drawCubeFromCorner(painterQueue, camera, x, y, 1, light.getValue(x, y), WALL_TOP_COLOR, WALL_SIDE_COLOR, PainterQueue.WALL_TOP_LAYER, PainterQueue.WALL_SIDE_LAYER);
+                    DrawUtil.drawCubeFromCorner(painterQueue, camera, x, y, 1, getLightValue(x, y), WALL_TOP_COLOR, WALL_SIDE_COLOR, PainterQueue.WALL_TOP_LAYER, PainterQueue.WALL_SIDE_LAYER);
                 else
-                    DrawUtil.drawRectFromCorner(painterQueue, camera, x, y, 1, light.getValue(x, y), FLOOR_COLOR, PainterQueue.FLOOR_LAYER);
+                    DrawUtil.drawRectFromCorner(painterQueue, camera, x, y, 1, getLightValue(x, y), FLOOR_COLOR, PainterQueue.FLOOR_LAYER);
 
         for (LList<HouseDrawable> houseDrawable : houseDrawables)
-            if (light.lighted((int) houseDrawable.node.getX(), (int) houseDrawable.node.getY()))
+            if (isLighted((int) houseDrawable.node.getX(), (int) houseDrawable.node.getY()))
                 houseDrawable.node.draw(painterQueue, camera);
+    }
+
+    private double getLightValue(int x, int y) {
+        return Math3D.max(light.getValue(x, y), staticLight.getValue(x, y));
+    }
+
+    private boolean isLighted(int x, int y) {
+        return light.lighted(x, y) || staticLight.lighted(x, y);
     }
 }

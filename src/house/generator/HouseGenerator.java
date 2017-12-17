@@ -8,10 +8,12 @@ public class HouseGenerator {
     private static final int MIN_ROOM_SIZE = 5, MAX_ROOM_SIZE = 12;
     private static final int NUM_ROOMS = 1000;
     private static final int NUM_CONNECTIONS = 1000, MAX_CONNECTION_LENGTH = 10;
+    private static final int NUM_LIGHTS = 100;
     private Room[] rooms;
     private int roomCount;
     private boolean[][] walls;
     private Coordinate[] spawns;
+    private Coordinate[] lights;
 
     public void generate() {
         initWalls();
@@ -19,6 +21,7 @@ public class HouseGenerator {
         connectRooms();
         fillRoomWalls();
         findSpawns();
+        generateLights();
     }
 
     private void initWalls() {
@@ -106,11 +109,29 @@ public class HouseGenerator {
         }
     }
 
+    private void generateLights() {
+        lights = new Coordinate[NUM_LIGHTS];
+        int j = -1;
+        for (int i = 0; i < lights.length; i++) {
+            do {
+                j++;
+                if (j == roomCount)
+                    j = 0;
+            }
+            while (!rooms[j].isConnected());
+            lights[i] = new Coordinate(rooms[j].getX(), rooms[j].getY());
+        }
+    }
+
     public boolean[][] getWalls() {
         return walls;
     }
 
     public Coordinate getSpawn(int i) {
         return spawns[i];
+    }
+
+    public Coordinate[] getLights() {
+        return lights;
     }
 }

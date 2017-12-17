@@ -1,6 +1,6 @@
 package map.pather;
 
-import map.Coordinate;
+import util.Coordinate;
 import util.Math3D;
 
 import java.util.ArrayList;

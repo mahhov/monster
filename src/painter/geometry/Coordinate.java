@@ -1,6 +1,6 @@
 package painter.geometry;
 
-public class Coordinate {
+public class Coordinate { // todo: whenever possible, convert geometry.coordinates to util.coordinates
     private double x, y;
 
     public Coordinate(double x, double y) {

@@ -38,7 +38,7 @@ public class Engine implements Runnable {
         Human human = new Human(houseGenerator.getSpawn(0));
         Monster monster = new Monster(houseGenerator.getSpawn(1));
 
-        house = new House(houseGenerator.getWalls());
+        house = new House(houseGenerator.getWalls(), houseGenerator.getLights());
         house.setHuman(human);
         house.setMonster(monster);
         house.setExit(new Exit(houseGenerator.getSpawn(2)));
@@ -96,7 +96,6 @@ public class Engine implements Runnable {
 }
 
 // todo monster ai
-// todo light
 // todo exit win condition
 // todo multiple light sources generated from house
 // todo redo senses

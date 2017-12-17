@@ -18,8 +18,9 @@ public class Matrix {
     }
 
     public void setValue(int x, int y, double value) {
+        if (updated[x][y] != current || value > this.value[x][y])
+            this.value[x][y] = value;
         updated[x][y] = current;
-        this.value[x][y] = value;
     }
 
     public double getValue(int x, int y) {
