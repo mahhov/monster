@@ -1,28 +1,44 @@
 package controller;
 
+import java.awt.event.KeyEvent;
+
 public class Controller {
     public static final int UP = 0, DOWN = 1, PRESSED = 2, RELEASED = 3;
+    private static final int NUM_KEYS;
     public static final int
-            KEY_W = 0, KEY_A = 1, KEY_S = 2, KEY_D = 3,
-            KEY_LEFT_CAROT = 4, KEY_RIGHT_CAROT = 5,
-            KEY_P = 6,
-            KEY_MINUS = 7, KEY_EQUAL = 8;
+            KEY_W, KEY_A, KEY_S, KEY_D,
+            PERIOD,
+            KEY_P, KEY_ENTER,
+            KEY_MINUS, KEY_EQUAL;
+
+    static {
+        int i = 0;
+        KEY_W = i++;
+        KEY_A = i++;
+        KEY_S = i++;
+        KEY_D = i++;
+        PERIOD = i++;
+        KEY_P = i++;
+        KEY_ENTER = i++;
+        KEY_MINUS = i++;
+        KEY_EQUAL = i++;
+        NUM_KEYS = i;
+    }
 
     private Key[] keys;
     private Mouse mouse;
 
     Controller() {
-        keys = new Key[9];
-        keys[KEY_W] = new Key(87);
-        keys[KEY_A] = new Key(65);
-        keys[KEY_S] = new Key(83);
-        keys[KEY_D] = new Key(68);
-        keys[KEY_LEFT_CAROT] = new Key(44);
-        keys[KEY_RIGHT_CAROT] = new Key(46);
-        keys[KEY_P] = new Key(80);
-        keys[KEY_MINUS] = new Key(45);
-        keys[KEY_EQUAL] = new Key(61);
-
+        keys = new Key[NUM_KEYS];
+        keys[KEY_W] = new Key(KeyEvent.VK_W);
+        keys[KEY_A] = new Key(KeyEvent.VK_A);
+        keys[KEY_S] = new Key(KeyEvent.VK_S);
+        keys[KEY_D] = new Key(KeyEvent.VK_D);
+        keys[PERIOD] = new Key(KeyEvent.VK_PERIOD);
+        keys[KEY_P] = new Key(KeyEvent.VK_P);
+        keys[KEY_ENTER] = new Key(KeyEvent.VK_ENTER);
+        keys[KEY_MINUS] = new Key(KeyEvent.VK_MINUS);
+        keys[KEY_EQUAL] = new Key(KeyEvent.VK_EQUALS);
         mouse = new Mouse();
     }
 

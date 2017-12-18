@@ -42,7 +42,7 @@ public class Character implements Follow, HouseCharacter {
     }
 
     private void applyController(Controller controller) {
-        setRun(controller.isKeyDown(Controller.KEY_RIGHT_CAROT));
+        setRun(controller.isKeyDown(Controller.PERIOD));
 
         if (controller.isKeyDown(Controller.KEY_A))
             setDirX(-1);
