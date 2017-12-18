@@ -123,7 +123,6 @@ public class Engine implements Runnable {
 // maybe human's light toggleable and detectable by monster
 
 // movement when sliding on walls shouldn't slow down
-// smaller victory distances
 // monster slower or more warning so you're not dead before you can respond
 // map generator bug with groups of disconnected rooms
 // restart game "press enter to try again" after game over

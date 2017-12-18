@@ -21,7 +21,7 @@ import java.awt.*;
 public class House implements Map {
     private static final Color FLOOR_COLOR = new Color(200, 255, 200), WALL_SIDE_COLOR = Color.LIGHT_GRAY, WALL_TOP_COLOR = Color.GRAY;
     private static final int VICTORY_HUMAN = 1, VICTORY_MONSTER = 2;
-    private static final double VICTORY_DISTANCE = 2;
+    private static final double VICTORY_DISTANCE = .25;
     private int victory;
     private boolean[][] walls;
     private LList<HouseDrawable> houseDrawables;
