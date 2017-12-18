@@ -121,3 +121,11 @@ public class Engine implements Runnable {
 // human re-chargeable pulse to indicate monster's exact location
 // maybe flickering house lights as monster approaches
 // maybe human's light toggleable and detectable by monster
+
+// movement when sliding on walls shouldn't slow down
+// smaller victory distances
+// monster slower or more warning so you're not dead before you can respond
+// map generator bug with groups of disconnected rooms
+// restart game "press enter to try again" after game over
+// better map generation to avoid the "tight and wrinkly" repetitive maps
+// some kind of clues as to where the exit is or some way of figuring it out without relying on pure random luck and walking "my experience was running around aimlessly"
