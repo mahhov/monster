@@ -114,3 +114,10 @@ public class Engine implements Runnable {
 }
 
 // todo redo senses
+
+// human distaince indicator to mosnter
+// monster senses human' exact location, with less range than human's distance indicator
+// running makes detectible from farther
+// human re-chargeable pulse to indicate monster's exact location
+// maybe flickering house lights as monster approaches
+// maybe human's light toggleable and detectable by monster
