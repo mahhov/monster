@@ -10,7 +10,7 @@ import util.Math3D;
 import java.awt.*;
 
 public class Human extends Character {
-    private static final Color COLOR_TOP = new Color(0, 120, 0), COLOR_SIDE = new Color(0, 80, 0);
+    private static final Color COLOR_TOP = new Color(0, 120, 0), COLOR_SIDE = new Color(0, 80, 0), COLOR_SENSE = new Color(180, 0, 0);
     private static final double WALK_SPEED = .1, RUN_SPEED = .3;
     private boolean light;
 
@@ -32,6 +32,6 @@ public class Human extends Character {
                 new Coordinate(-width, .40),
                 new Coordinate(width, .42)
         });
-        painterQueue.add(new PainterRectangle(coord, 1, Color.RED, false, true), PainterQueue.OVERLAY_LAYER);
+        painterQueue.add(new PainterRectangle(coord, 1, COLOR_SENSE, false, true), PainterQueue.OVERLAY_LAYER);
     }
 }
