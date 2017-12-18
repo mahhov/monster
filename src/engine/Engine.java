@@ -52,8 +52,10 @@ public class Engine implements Runnable {
     }
 
     public void run() {
-        gameLoop();
-        victoryLoop();
+        while (true) {
+            gameLoop();
+            victoryLoop();
+        }
     }
 
     private void gameLoop() {
@@ -62,6 +64,7 @@ public class Engine implements Runnable {
 
         while (!house.done()) {
             pauseLoop();
+            checkRestart();
 
             camera.move(controller);
             house.update(controller);
@@ -94,18 +97,24 @@ public class Engine implements Runnable {
     }
 
     private void victoryLoop() {
-        while (true) {
+        while (house.done()) {
             PainterQueue painterQueue = new PainterQueue();
             house.draw(painterQueue, camera);
             house.drawVictory(painterQueue);
             painter.setPainterQueue(painterQueue);
             Math3D.sleep(30);
+            checkRestart();
         }
     }
 
     private void checkPause() {
         if (controller.isKeyPressed(Controller.KEY_P))
             pause = !pause;
+    }
+
+    private void checkRestart() {
+        if (controller.isKeyPressed(Controller.KEY_ENTER))
+            createHouse();
     }
 
     public static void main(String[] args) {

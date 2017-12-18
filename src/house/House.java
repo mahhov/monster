@@ -123,6 +123,7 @@ public class House implements Map {
 
     public void drawVictory(PainterQueue painterQueue) {
         String victoryText = victory == VICTORY_MONSTER ? "MONSTER WINS" : "HUMAN WINS";
-        painterQueue.add(new PainterText(new Coordinate(.3, .3), Color.WHITE, victoryText), PainterQueue.OVERLAY_LAYER);
+        painterQueue.add(new PainterText(new Coordinate(.35, .2), Color.WHITE, victoryText), PainterQueue.OVERLAY_LAYER);
+        painterQueue.add(new PainterText(new Coordinate(.35, .25), Color.WHITE, "Press Enter to Restart"), PainterQueue.OVERLAY_LAYER);
     }
 }
