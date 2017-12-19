@@ -17,7 +17,7 @@ public class Human extends Character {
     private static final int SENSE_DISTANCE = 12;
     private double senseAlert;
 
-    public Human(Coordinate spawn) {
+    public Human(util.Coordinate spawn) {
         super(true, COLOR_TOP, COLOR_SIDE, WALK_SPEED, RUN_SPEED, spawn);
     }
 

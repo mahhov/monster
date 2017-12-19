@@ -2,8 +2,12 @@ package house.generator;
 
 import util.Math3D;
 
+import java.util.Iterator;
+
 class Room {
     private int left, right, top, bottom, centerX, centerY, width, height;
+    private Room[] neighbors;
+    private int numNeighbors;
     private boolean connected;
 
     Room(int left, int top, int width, int height) {
@@ -15,6 +19,7 @@ class Room {
         centerY = top + height / 2;
         this.width = width;
         this.height = height;
+        neighbors = new Room[HouseGenerator.NUM_ROOMS];
     }
 
     boolean intersects(Room room) {
@@ -35,6 +40,24 @@ class Room {
         for (int x = left + 1; x < right; x++)
             for (int y = top + 1; y < bottom; y++)
                 walls[x][y] = false;
+    }
+
+    void addNeighbor(Room neighbor) {
+        neighbors[numNeighbors++] = neighbor;
+    }
+    
+    Iterable<Room> getNeighbors() {
+        return () -> new Iterator<Room>() {
+            private int i = 0;
+
+            public boolean hasNext() {
+                return i < numNeighbors;
+            }
+
+            public Room next() {
+                return neighbors[i++];
+            }
+        };
     }
 
     int getX() {

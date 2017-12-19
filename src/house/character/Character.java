@@ -22,7 +22,7 @@ public class Character implements Follow, HouseCharacter {
     private double dirX, dirY;
     private boolean run;
 
-    Character(boolean main, Color colorTop, Color colorSide, double walkSpeed, double runSpeed, Coordinate spawn) {
+    Character(boolean main, Color colorTop, Color colorSide, double walkSpeed, double runSpeed, util.Coordinate spawn) {
         this.main = main;
         this.colorTop = colorTop;
         this.colorSide = colorSide;

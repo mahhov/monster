@@ -134,6 +134,5 @@ public class Engine implements Runnable {
 // movement when sliding on walls shouldn't slow down
 // monster slower or more warning so you're not dead before you can respond
 // map generator bug with groups of disconnected rooms
-// restart game "press enter to try again" after game over
 // better map generation to avoid the "tight and wrinkly" repetitive maps
 // some kind of clues as to where the exit is or some way of figuring it out without relying on pure random luck and walking "my experience was running around aimlessly"

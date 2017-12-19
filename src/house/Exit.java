@@ -1,7 +1,7 @@
 package house;
 
 import camera.Camera;
-import painter.geometry.Coordinate;
+import util.Coordinate;
 import painter.painterelement.PainterQueue;
 import util.DrawUtil;
 

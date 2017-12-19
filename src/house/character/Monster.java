@@ -2,7 +2,6 @@ package house.character;
 
 import house.House;
 import map.pather.Path;
-import painter.geometry.Coordinate;
 import util.CoordinateD;
 import util.Math3D;
 
@@ -17,7 +16,7 @@ public class Monster extends Character {
     private double senseX, senseY;
     private Path wanderPath;
 
-    public Monster(Coordinate spawn) {
+    public Monster(util.Coordinate spawn) {
         super(false, COLOR_TOP, COLOR_SIDE, WALK_SPEED, RUN_SPEED, spawn);
     }
 

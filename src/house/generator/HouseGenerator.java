@@ -1,12 +1,13 @@
 package house.generator;
 
-import painter.geometry.Coordinate;
+import util.Coordinate;
 import util.Math3D;
+import util.Queue;
 
 public class HouseGenerator {
     private static final int WIDTH = 128, HEIGHT = 128;
     private static final int MIN_ROOM_SIZE = 5, MAX_ROOM_SIZE = 12;
-    private static final int NUM_ROOMS = 1000;
+    static final int NUM_ROOMS = 1000;
     private static final int NUM_CONNECTIONS = 1000, MAX_CONNECTION_LENGTH = 10;
     private static final int NUM_LIGHTS = 0;
     private Room[] rooms;
@@ -19,6 +20,7 @@ public class HouseGenerator {
         initWalls();
         placeRooms();
         connectRooms();
+        pruneUnconnectedRooms();
         fillRoomWalls();
         findSpawns();
         generateLights();
@@ -52,12 +54,6 @@ public class HouseGenerator {
         }
     }
 
-    private void fillRoomWalls() {
-        for (int i = 0; i < roomCount; i++)
-            if (rooms[i].isConnected())
-                rooms[i].empty(walls);
-    }
-
     private void connectRooms() {
         for (int i = 0; i < NUM_CONNECTIONS; i++) {
             int roomNum1 = Math3D.random(0, roomCount - 1);
@@ -69,9 +65,8 @@ public class HouseGenerator {
             Room room2 = rooms[roomNum2];
 
             if (room1.distance(room2) < MAX_CONNECTION_LENGTH) {
-                room1.setConnected();
-                room2.setConnected();
-
+                room1.addNeighbor(room2);
+                room2.addNeighbor(room1);
                 int startX = room1.getX();
                 int startY = room1.getY();
                 int endX = room2.getX();
@@ -98,29 +93,43 @@ public class HouseGenerator {
         }
     }
 
+    private void pruneUnconnectedRooms() {
+        Queue<Room> openRooms = new Queue<>(NUM_ROOMS);
+        openRooms.insert(rooms[0]);
+        rooms[0].setConnected();
+        while (!openRooms.isEmpty())
+            for (Room neighbor : openRooms.remove().getNeighbors())
+                if (!neighbor.isConnected()) {
+                    neighbor.setConnected();
+                    openRooms.insert(neighbor);
+                }
+    }
+
+    private void fillRoomWalls() {
+        for (int i = 0; i < roomCount; i++)
+            if (rooms[i].isConnected())
+                rooms[i].empty(walls);
+    }
+
     private void findSpawns() {
-        spawns = new Coordinate[3];
-        int j = -1;
-        for (int i = 0; i < spawns.length; i++) {
-            do
-                j++;
-            while (!rooms[j].isConnected());
-            spawns[i] = new Coordinate(rooms[j].getX(), rooms[j].getY());
-        }
+        spawns = findCoordinates(3);
     }
 
     private void generateLights() {
-        lights = new Coordinate[NUM_LIGHTS];
+        lights = findCoordinates(NUM_LIGHTS);
+    }
+
+    private Coordinate[] findCoordinates(int num) {
+        Coordinate[] coordinates = new Coordinate[num];
         int j = -1;
-        for (int i = 0; i < lights.length; i++) {
-            do {
-                j++;
-                if (j == roomCount)
+        for (int i = 0; i < num; i++) {
+            do
+                if (++j == roomCount)
                     j = 0;
-            }
             while (!rooms[j].isConnected());
-            lights[i] = new Coordinate(rooms[j].getX(), rooms[j].getY());
+            coordinates[i] = new Coordinate(rooms[j].getX(), rooms[j].getY());
         }
+        return coordinates;
     }
 
     public boolean[][] getWalls() {

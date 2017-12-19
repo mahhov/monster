@@ -34,7 +34,7 @@ public class House implements Map {
     private Monster monster;
     private Exit exit;
 
-    public House(boolean[][] walls, Coordinate[] lights) {
+    public House(boolean[][] walls, util.Coordinate[] lights) {
         this.walls = walls;
         houseDrawables = new LList<>();
         intersectionFinder = new IntersectionFinder(this);
@@ -42,7 +42,7 @@ public class House implements Map {
         lighter = new Lighter(this);
         light = new Matrix(getWidth(), getHeight(), Lighter.MIN_LIGHT);
         staticLight = new Matrix(getWidth(), getHeight(), Lighter.MIN_LIGHT);
-        for (Coordinate light : lights)
+        for (util.Coordinate light : lights)
             lighter.calculateLight(light.getX(), light.getY(), staticLight, 4); // todo make light range constant
     }
 
