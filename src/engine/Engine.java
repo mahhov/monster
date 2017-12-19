@@ -122,17 +122,17 @@ public class Engine implements Runnable {
     }
 }
 
-// todo redo senses
 
-// human distaince indicator to mosnter
-// monster senses human' exact location, with less range than human's distance indicator
+// todo: movement when sliding on walls shouldn't slow down
+// todo: monster slower or more warning so you're not dead before you can respond
+// todo: better map generation to avoid the "tight and wrinkly" repetitive maps
+// todo: some kind of clues as to where the exit is or some way of figuring it out without relying on pure random luck and walking "my experience was running around aimlessly"
+
+// todo : senses
+// monster goes to general area where human is
+// monster sniffs human location based on cooldown, and accuracy based on distance
+// monster goes to last sniff location unless line of sight of human or human light
+// human light toggle
+// monster leave footprint trail
+// human alert when monster sniffed human
 // running makes detectible from farther
-// human re-chargeable pulse to indicate monster's exact location
-// maybe flickering house lights as monster approaches
-// maybe human's light toggleable and detectable by monster
-
-// movement when sliding on walls shouldn't slow down
-// monster slower or more warning so you're not dead before you can respond
-// map generator bug with groups of disconnected rooms
-// better map generation to avoid the "tight and wrinkly" repetitive maps
-// some kind of clues as to where the exit is or some way of figuring it out without relying on pure random luck and walking "my experience was running around aimlessly"
