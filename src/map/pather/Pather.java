@@ -5,6 +5,7 @@ import map.Map;
 import java.util.ArrayList;
 
 public class Pather {
+    private static final int NEAREST_MOVABLE_RANGE = 10;
     private Graph graph;
     private Coordinate start, end;
     private Node startNode, endNode;
@@ -26,8 +27,12 @@ public class Pather {
     }
 
     public Path pathFind(double origX, double origY, double destX, double destY) {
-        start = new Coordinate((int) origX, (int) origY);
-        end = new Coordinate((int) destX, (int) destY);
+        start = nearestMoveable((int) origX, (int) origY);
+        if (start == null)
+            return Path.EMPTY_PATH;
+        end = nearestMoveable((int) destX, (int) destY);
+        if (end == null)
+            return Path.EMPTY_PATH;
         appendEndpoints();
         prepareGraphForAStar();
         pathNodes = aStar();
@@ -92,6 +97,28 @@ public class Pather {
         util.Coordinate a = graph.nodes.get(i).coordinate;
         util.Coordinate b = graph.nodes.get(j).coordinate;
         return !intersectionFinder.intersects(a, b);
+    }
+
+    private Coordinate nearestMoveable(int x, int y) {
+        if (map.isInBoundsMoveable(x, y))
+            return new Coordinate(x, y);
+
+        int r = 1;
+        while (r < NEAREST_MOVABLE_RANGE) {
+            for (int i = -r; i < r; i++) {
+                if (map.isInBoundsMoveable(x + i, y - r))
+                    return new Coordinate(x + i, y - r);
+                if (map.isInBoundsMoveable(x + i, y + r))
+                    return new Coordinate(x + i, y + r);
+                if (map.isInBoundsMoveable(x - r, y + i))
+                    return new Coordinate(x - r, y + i);
+                if (map.isInBoundsMoveable(x + r, y + i))
+                    return new Coordinate(x + r, y + i);
+            }
+            r++;
+        }
+
+        return null;
     }
 
     private void appendEndpoints() {
