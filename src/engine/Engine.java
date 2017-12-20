@@ -15,6 +15,8 @@ import painter.painterelement.PainterQueue;
 import util.Math3D;
 
 public class Engine implements Runnable {
+    public static final boolean DEBUG_LIGHTING_ON = false;
+
     private static final long NANOSECONDS_IN__SECOND = 1000000000L;
     private static final int FRAME = 400, IMAGE = 400;
 

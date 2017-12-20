@@ -2,6 +2,7 @@ package house;
 
 import camera.Camera;
 import controller.Controller;
+import engine.Engine;
 import house.character.Human;
 import house.character.Monster;
 import map.Map;
@@ -19,7 +20,6 @@ import util.Matrix;
 import java.awt.*;
 
 public class House implements Map {
-    private static final boolean DEBUG_LIGHTING_ON = false;
     private static final Color FLOOR_COLOR = new Color(200, 255, 200), WALL_SIDE_COLOR = Color.LIGHT_GRAY, WALL_TOP_COLOR = Color.GRAY;
     private static final int VICTORY_HUMAN = 1, VICTORY_MONSTER = 2;
     private static final double VICTORY_DISTANCE = .5;
@@ -116,11 +116,11 @@ public class House implements Map {
     }
 
     private double getLightValue(int x, int y) {
-        return DEBUG_LIGHTING_ON ? 1 : Math3D.max(light.getValue(x, y), staticLight.getValue(x, y));
+        return Engine.DEBUG_LIGHTING_ON ? 1 : Math3D.max(light.getValue(x, y), staticLight.getValue(x, y));
     }
 
     private boolean isLighted(int x, int y) {
-        return DEBUG_LIGHTING_ON || light.lighted(x, y) || staticLight.lighted(x, y);
+        return Engine.DEBUG_LIGHTING_ON || light.lighted(x, y) || staticLight.lighted(x, y);
     }
 
     public boolean done() {
