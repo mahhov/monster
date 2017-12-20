@@ -128,6 +128,7 @@ public class Engine implements Runnable {
 // todo: monster slower or more warning so you're not dead before you can respond
 // todo: better map generation to avoid the "tight and wrinkly" repetitive maps
 // todo: some kind of clues as to where the exit is or some way of figuring it out without relying on pure random luck and walking "my experience was running around aimlessly"
+// todo: pathfinding bug
 
 // todo : senses
 // -> monster goes to general area where human is

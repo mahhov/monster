@@ -23,6 +23,7 @@ public class House implements Map {
     private static final Color FLOOR_COLOR = new Color(200, 255, 200), WALL_SIDE_COLOR = Color.LIGHT_GRAY, WALL_TOP_COLOR = Color.GRAY;
     private static final int VICTORY_HUMAN = 1, VICTORY_MONSTER = 2;
     private static final double VICTORY_DISTANCE = .5;
+    private static final int HOUSE_LIGHT_DISTANCE = 4, HUMAN_LIGHT_DISTANCE = 10;
     private int victory;
     private boolean[][] walls;
     private LList<HouseDrawable> houseDrawables;
@@ -44,7 +45,7 @@ public class House implements Map {
         light = new Matrix(getWidth(), getHeight(), Lighter.MIN_LIGHT);
         staticLight = new Matrix(getWidth(), getHeight(), Lighter.MIN_LIGHT);
         for (util.Coordinate light : lights)
-            lighter.calculateLight(light.getX(), light.getY(), staticLight, 4); // todo make light range constant
+            lighter.calculateLight(light.getX(), light.getY(), staticLight, HOUSE_LIGHT_DISTANCE);
     }
 
     public void setHuman(Human human) {
@@ -67,7 +68,7 @@ public class House implements Map {
         monster.update(this, controller, human);
         testWinConditions();
         light.reset();
-        lighter.calculateLight(human.getX(), human.getY(), light, 10); // todo make light range constant
+        lighter.calculateLight(human.getX(), human.getY(), light, HUMAN_LIGHT_DISTANCE);
     }
 
     private void testWinConditions() {
