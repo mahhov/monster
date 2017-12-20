@@ -15,9 +15,11 @@ public class Human extends Character {
     private static final Color COLOR_TOP = new Color(0, 120, 0), COLOR_SIDE = new Color(0, 80, 0), COLOR_SENSE = new Color(180, 0, 0);
     private static final double WALK_SPEED = .1, RUN_SPEED = .3;
 
+    private static final int SENSE_BLINK_ON = 5, SENSE_BLINK_OFF = 50;
     private static final int SENSE_DISTANCE = 24;
     private double senseAlert;
     private double senseDirX, senseDirY;
+    private int senseBlink;
 
     public Human(util.Coordinate spawn) {
         super(true, COLOR_TOP, COLOR_SIDE, WALK_SPEED, RUN_SPEED, spawn);
@@ -36,6 +38,11 @@ public class Human extends Character {
         if (senseAlert == 0)
             return;
 
+        senseBlink--;
+        int blinkOff = (int) (SENSE_BLINK_OFF - (SENSE_BLINK_OFF - SENSE_BLINK_ON) * senseAlert);
+        if (senseBlink == -SENSE_BLINK_ON || senseBlink > blinkOff)
+            senseBlink = blinkOff;
+
         double width = .4 * senseAlert;
         CoordinateGroup coord = new CoordinateGroup(new Coordinate[] {
                 new Coordinate(-width, .40),
@@ -43,6 +50,7 @@ public class Human extends Character {
         });
         painterQueue.add(new PainterRectangle(coord, 1, COLOR_SENSE, false, true), PainterQueue.OVERLAY_LAYER);
 
-        DrawUtil.drawRectFromCorner(painterQueue, camera, getX() + senseDirX, getY() + senseDirY, .25, 1, COLOR_SENSE, PainterQueue.OVERLAY_LAYER);
+        if (senseBlink < 0)
+            DrawUtil.drawRectFromCorner(painterQueue, camera, getX() + senseDirX, getY() + senseDirY, .25, 1, COLOR_SENSE, PainterQueue.OVERLAY_LAYER);
     }
 }
