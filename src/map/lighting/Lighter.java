@@ -12,7 +12,8 @@ public class Lighter {
     private Map map;
 
     // temp var
-    private int srcX, srcY, lightRange;
+    private double srcX, srcY;
+    private int lightRange;
     private int x, y, startX, endX, startY, endY;
     private double distance;
 
@@ -23,7 +24,7 @@ public class Lighter {
 
     public void calculateLight(double srcX, double srcY, Matrix light, int lightRange) {
         this.lightRange = lightRange;
-        setRange((int) srcX, (int) srcY);
+        setRange(srcX, srcY);
         srcX -= .5;
         srcY -= .5;
 
@@ -36,13 +37,13 @@ public class Lighter {
                     light.setValue(x, y, boundLight(0));
     }
 
-    private void setRange(int x, int y) {
+    private void setRange(double x, double y) {
         srcX = x;
         srcY = y;
-        startX = x - lightRange;
-        endX = x + lightRange;
-        startY = y - lightRange;
-        endY = y + lightRange;
+        startX = (int) (x - lightRange);
+        endX = startX + lightRange + lightRange + 1;
+        startY = (int) (y - lightRange);
+        endY = startY + lightRange + lightRange + 1;
         if (startX < 0)
             startX = 0;
         if (endX >= map.getWidth())
@@ -54,7 +55,7 @@ public class Lighter {
     }
 
     private boolean hasView() {
-        return !intersectionFinder.intersects(srcX, srcY, x, y);
+        return !intersectionFinder.intersects(srcX + .5, srcY + .5, x + .5, y + .5);
     }
 
     private double lightValue() {
@@ -63,5 +64,9 @@ public class Lighter {
 
     private double boundLight(double light) {
         return Math3D.minMax(light, MIN_LIGHT, MAX_LIGHT);
+    }
+
+    public IntersectionFinder getIntersectionFinder() {
+        return intersectionFinder;
     }
 }

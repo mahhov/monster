@@ -3,11 +3,10 @@ package map.lighting;
 import map.Map;
 import util.Math3D;
 
-class IntersectionFinder {
+public class IntersectionFinder {
     private Map map;
 
     // temp vars
-    private double x, y;
     private double dirX, dirY;
     private double checkDx, checkDy;
     private double totalMoved, totalToMove;
@@ -17,10 +16,7 @@ class IntersectionFinder {
         this.map = map;
     }
 
-    boolean intersects(int srcX, int srcY, int destX, int destY) {
-        x = srcX + .5;
-        y = srcY + .5;
-
+    public boolean intersects(double srcX, double srcY, double destX, double destY) {
         dirX = destX - srcX;
         dirY = destY - srcY;
 
@@ -37,8 +33,8 @@ class IntersectionFinder {
         dirY /= totalToMove;
 
         while (true) {
-            moveX = getMove(x, dirX);
-            moveY = getMove(y, dirY);
+            moveX = getMove(srcX, dirX);
+            moveY = getMove(srcY, dirY);
 
             move = (moveX < moveY ? moveX : moveY) + Math3D.EPSILON;
             totalMoved += move;
@@ -46,10 +42,10 @@ class IntersectionFinder {
             if (totalMoved > totalToMove)
                 return false;
 
-            x += dirX * move;
-            y += dirY * move;
+            srcX += dirX * move;
+            srcY += dirY * move;
 
-            if (!map.isInBoundsMoveable((int) x, (int) y))
+            if (!map.isInBoundsMoveable((int) srcX, (int) srcY))
                 return true;
         }
     }

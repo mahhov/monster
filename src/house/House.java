@@ -19,13 +19,14 @@ import util.Matrix;
 import java.awt.*;
 
 public class House implements Map {
+    private static final boolean DEBUG_LIGHTING_ON = false;
     private static final Color FLOOR_COLOR = new Color(200, 255, 200), WALL_SIDE_COLOR = Color.LIGHT_GRAY, WALL_TOP_COLOR = Color.GRAY;
     private static final int VICTORY_HUMAN = 1, VICTORY_MONSTER = 2;
     private static final double VICTORY_DISTANCE = .5;
     private int victory;
     private boolean[][] walls;
     private LList<HouseDrawable> houseDrawables;
-    private IntersectionFinder intersectionFinder;
+    private IntersectionFinder movementIntersectionFinder;
     private Pather pather;
     private Lighter lighter;
     private Matrix light;
@@ -37,7 +38,7 @@ public class House implements Map {
     public House(boolean[][] walls, util.Coordinate[] lights) {
         this.walls = walls;
         houseDrawables = new LList<>();
-        intersectionFinder = new IntersectionFinder(this);
+        movementIntersectionFinder = new IntersectionFinder(this);
         pather = new Pather(this);
         lighter = new Lighter(this);
         light = new Matrix(getWidth(), getHeight(), Lighter.MIN_LIGHT);
@@ -76,8 +77,12 @@ public class House implements Map {
             victory = VICTORY_MONSTER;
     }
 
-    public IntersectionFinder getIntersectionFinder() {
-        return intersectionFinder;
+    public IntersectionFinder getMovementIntersectionFinder() {
+        return movementIntersectionFinder;
+    }
+
+    public boolean lineOfSight(double x1, double y1, double x2, double y2) {
+        return !lighter.getIntersectionFinder().intersects(x1, y1, x2, y2);
     }
 
     public Pather getPather() {
@@ -110,11 +115,11 @@ public class House implements Map {
     }
 
     private double getLightValue(int x, int y) {
-        return Math3D.max(light.getValue(x, y), staticLight.getValue(x, y));
+        return DEBUG_LIGHTING_ON ? 1 : Math3D.max(light.getValue(x, y), staticLight.getValue(x, y));
     }
 
     private boolean isLighted(int x, int y) {
-        return light.lighted(x, y) || staticLight.lighted(x, y);
+        return DEBUG_LIGHTING_ON || light.lighted(x, y) || staticLight.lighted(x, y);
     }
 
     public boolean done() {

@@ -1,8 +1,11 @@
 package house.character;
 
+import camera.Camera;
 import house.House;
 import map.pather.Path;
+import painter.painterelement.PainterQueue;
 import util.CoordinateD;
+import util.DrawUtil;
 import util.Math3D;
 
 import java.awt.*;
@@ -11,9 +14,11 @@ public class Monster extends Character {
     private static final Color COLOR_TOP = new Color(160, 0, 0), COLOR_SIDE = new Color(120, 0, 0);
     private static final double WALK_SPEED = .15, RUN_SPEED = .45;
 
+    private static final int SENSE_SNIFF_COOLDOWN = 100;
+    private int sniffCooldown;
+
     private static final int SENSE_DISTANCE = 9;
-    private boolean sense;
-    private double senseX, senseY;
+    private double destX, destY;
     private Path wanderPath;
 
     public Monster(util.Coordinate spawn) {
@@ -21,16 +26,7 @@ public class Monster extends Character {
     }
 
     void applyComputer(House house) {
-        setRun(false);
-
-        if (sense)
-            wanderPath = house.getPather().pathFind(getX(), getY(), senseX, senseY);
-        else if (wanderPath == null || wanderPath.done()) {
-            CoordinateD wanderDestination = randomWanderDestination(house);
-            wanderPath = house.getPather().pathFind(getX(), getY(), wanderDestination.getX(), wanderDestination.getY());
-        }
-
-        if (!wanderPath.done()) {
+        if (wanderPath != null && !wanderPath.done()) {
             setDirX(wanderPath.getX() - getX());
             setDirY(wanderPath.getY() - getY());
             wanderPath.update(getX(), getY());
@@ -46,13 +42,30 @@ public class Monster extends Character {
         return new CoordinateD(wanderX, wanderY);
     }
 
-    void setSense(Character source) {
-        double distance = Math3D.magnitude(getX() - source.getX(), getY() - source.getY()); // todo : use magnitudeSqr
-        if (distance < SENSE_DISTANCE) {
-            sense = true;
-            senseX = source.getX();
-            senseY = source.getY();
-        } else
-            sense = false;
+    void setSense(House house, Character source) {
+        boolean lineOfSight = house.lineOfSight(getX(), getY(), source.getX(), source.getY());
+        //        System.out.println(lineOfSight + " :: (" + getX() + ", " + getY() + ") -> (" + source.getX() + ", " + source.getY() + ")");
+        boolean sniffReady = sniffCooldown == SENSE_SNIFF_COOLDOWN;
+        if (!sniffReady)
+            sniffCooldown++;
+
+        if (lineOfSight) {
+            destX = source.getX();
+            destY = source.getY();
+        } else if (sniffReady) {
+            sniffCooldown = 0;
+            double distance = Math3D.magnitude(getX() - source.getX(), getY() - source.getY()); // todo : use magnitudeSqr
+            double sniffError = distance / 10;
+            double sniffX = Math3D.random(source.getX() - sniffError, source.getX() + sniffError);
+            double sniffY = Math3D.random(source.getY() - sniffError, source.getY() + sniffError);
+            destX = sniffX;
+            destY = sniffY;
+        }
+        wanderPath = house.getPather().pathFind(getX(), getY(), destX, destY);
+    }
+
+    public void draw(PainterQueue painterQueue, Camera camera) {
+        super.draw(painterQueue, camera);
+        DrawUtil.drawCubeFromCenter(painterQueue, camera, destX, destY, 1, Color.LIGHT_GRAY, Color.LIGHT_GRAY, PainterQueue.CHARACTER_TOP_LAYER, PainterQueue.CHARACTER_SIDE_LAYER);
     }
 }

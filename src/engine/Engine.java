@@ -15,6 +15,7 @@ import painter.painterelement.PainterQueue;
 import util.Math3D;
 
 public class Engine implements Runnable {
+    private static final long NANOSECONDS_IN__SECOND = 1000000000L;
     private static final int FRAME = 400, IMAGE = 400;
 
     private Controller controller;
@@ -79,7 +80,7 @@ public class Engine implements Runnable {
 
             Math3D.sleep(10);
             endTime = System.nanoTime() + 1;
-            if (endTime - beginTime > 1000000000L) {
+            if (endTime - beginTime > NANOSECONDS_IN__SECOND) {
                 Painter.DEBUG_STRING[0] = "draw fps: " + frame + " ; engine fps: " + engineFrame;
                 frame = 0;
                 engineFrame = 0;
@@ -129,10 +130,11 @@ public class Engine implements Runnable {
 // todo: some kind of clues as to where the exit is or some way of figuring it out without relying on pure random luck and walking "my experience was running around aimlessly"
 
 // todo : senses
-// monster goes to general area where human is
-// monster sniffs human location based on cooldown, and accuracy based on distance
-// monster goes to last sniff location unless line of sight of human or human light
+// -> monster goes to general area where human is
+// -> monster sniffs human location based on cooldown, and accuracy based on distance
+// -> monster goes to last sniff location unless line of sight of human or human light
 // human light toggle
 // monster leave footprint trail
 // human alert when monster sniffed human
 // running makes detectible from farther
+// monster only slightly faster

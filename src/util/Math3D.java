@@ -65,6 +65,10 @@ public class Math3D {
         return (int) (Math.random() * (max - min + 1) + min);
     }
 
+    public static double random(double min, double max) {
+        return Math.random() * (max - min + 1) + min;
+    }
+
     public static void sleep(int howLong) {
         try {
             Thread.sleep(howLong);

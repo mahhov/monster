@@ -6,7 +6,6 @@ import controller.Controller;
 import house.House;
 import house.HouseCharacter;
 import map.movement.Intersection;
-import painter.geometry.Coordinate;
 import painter.painterelement.PainterQueue;
 import util.DrawUtil;
 
@@ -33,7 +32,7 @@ public class Character implements Follow, HouseCharacter {
     }
 
     public void update(House house, Controller controller, Character otherCharacter) {
-        setSense(otherCharacter);
+        setSense(house, otherCharacter);
         if (main)
             applyController(controller);
         else
@@ -64,12 +63,12 @@ public class Character implements Follow, HouseCharacter {
     private void move(House house) {
         double speed = run ? runSpeed : walkSpeed;
         double[] orig = new double[] {x, y};
-        Intersection intersection = house.getIntersectionFinder().find(orig, new double[] {dirX, dirY}, speed, SIZE);
+        Intersection intersection = house.getMovementIntersectionFinder().find(orig, new double[] {dirX, dirY}, speed, SIZE);
         x = intersection.getX();
         y = intersection.getY();
     }
 
-    void setSense(Character source) {
+    void setSense(House house, Character source) {
     }
 
     public void draw(PainterQueue painterQueue, Camera camera) {

@@ -1,6 +1,7 @@
 package house.character;
 
 import camera.Camera;
+import house.House;
 import painter.geometry.Coordinate;
 import painter.geometry.CoordinateGroup;
 import painter.painterelement.PainterQueue;
@@ -21,7 +22,7 @@ public class Human extends Character {
         super(true, COLOR_TOP, COLOR_SIDE, WALK_SPEED, RUN_SPEED, spawn);
     }
 
-    void setSense(Character source) {
+    void setSense(House house, Character source) {
         double distance = Math3D.magnitude(getX() - source.getX(), getY() - source.getY());
         senseAlert = Math3D.minMax(1 - distance / SENSE_DISTANCE, 0, 1);
     }
