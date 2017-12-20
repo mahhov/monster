@@ -25,13 +25,11 @@ public class Lighter {
     public void calculateLight(double srcX, double srcY, Matrix light, int lightRange) {
         this.lightRange = lightRange;
         setRange(srcX, srcY);
-        srcX -= .5;
-        srcY -= .5;
-
+    
         for (x = startX; x <= endX; x++)
             for (y = startY; y <= endY; y++)
                 if (hasView()) {
-                    distance = Math3D.magnitude(x - srcX, y - srcY);
+                    distance = Math3D.magnitude(x + .5 - srcX, y + .5 - srcY);
                     light.setValue(x, y, boundLight(lightValue()));
                 } else
                     light.setValue(x, y, boundLight(0));
@@ -55,7 +53,7 @@ public class Lighter {
     }
 
     private boolean hasView() {
-        return !intersectionFinder.intersects(srcX + .5, srcY + .5, x + .5, y + .5);
+        return !intersectionFinder.intersects(srcX, srcY, x + .5, y + .5);
     }
 
     private double lightValue() {
