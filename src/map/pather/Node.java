@@ -1,12 +1,12 @@
 package map.pather;
 
-import util.Coordinate;
+import util.CoordinateD;
 import util.Math3D;
 
 import java.util.ArrayList;
 
 class Node implements Comparable<Node> {
-    Coordinate coordinate;
+    CoordinateD coordinate;
     ArrayList<Edge> edges = new ArrayList<>(); // todo make private
     private Node cameFrom;
     private double g;
@@ -24,7 +24,7 @@ class Node implements Comparable<Node> {
         closed = false;
     }
 
-    void updateNode(Node cameFrom, double g, Coordinate endCoordinate) {
+    void updateNode(Node cameFrom, double g, CoordinateD endCoordinate) {
         if (g > this.g)
             return;
         this.cameFrom = cameFrom;
@@ -40,10 +40,6 @@ class Node implements Comparable<Node> {
 
     double getG() {
         return g;
-    }
-
-    double getF() {
-        return f;
     }
 
     boolean isOpen() {

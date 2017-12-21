@@ -1,6 +1,7 @@
 package map.pather;
 
 import map.Map;
+import util.CoordinateD;
 
 import java.util.ArrayList;
 
@@ -27,10 +28,10 @@ public class Pather {
     }
 
     public Path pathFind(double origX, double origY, double destX, double destY) {
-        start = nearestMoveable((int) origX, (int) origY);
+        start = nearestMoveable(origX, origY);
         if (start == null)
             return Path.EMPTY_PATH;
-        end = nearestMoveable((int) destX, (int) destY);
+        end = nearestMoveable(destX, destY);
         if (end == null)
             return Path.EMPTY_PATH;
         appendEndpoints();
@@ -49,7 +50,7 @@ public class Pather {
         for (int x = 0; x < map.getWidth(); x++)
             for (int y = 0; y < map.getHeight(); y++) {
                 current = new Coordinate(x, y);
-                touchCurrent = !map.isMoveable(current.getX(), current.getY());
+                touchCurrent = !map.isMoveable((int) current.getX(), (int) current.getY());
                 if (touchCurrent)
                     continue;
 
@@ -63,14 +64,14 @@ public class Pather {
                 right = current.modify(1, 0);
 
 
-                touchUp = !inBounds(up) || !map.isMoveable(up.getX(), up.getY());
-                touchDown = !inBounds(down) || !map.isMoveable(down.getX(), down.getY());
-                touchLeft = !inBounds(left) || !map.isMoveable(left.getX(), left.getY());
-                touchRight = !inBounds(right) || !map.isMoveable(right.getX(), right.getY());
-                touchUpRight = !inBounds(upRight) || !map.isMoveable(upRight.getX(), upRight.getY());
-                touchUpLeft = !inBounds(upLeft) || !map.isMoveable(upLeft.getX(), upLeft.getY());
-                touchDownRight = !inBounds(downRight) || !map.isMoveable(downRight.getX(), downRight.getY());
-                touchDownLeft = !inBounds(downLeft) || !map.isMoveable(downLeft.getX(), downLeft.getY());
+                touchUp = !inBounds(up) || !map.isMoveable((int) up.getX(), (int) up.getY());
+                touchDown = !inBounds(down) || !map.isMoveable((int) down.getX(), (int) down.getY());
+                touchLeft = !inBounds(left) || !map.isMoveable((int) left.getX(), (int) left.getY());
+                touchRight = !inBounds(right) || !map.isMoveable((int) right.getX(), (int) right.getY());
+                touchUpRight = !inBounds(upRight) || !map.isMoveable((int) upRight.getX(), (int) upRight.getY());
+                touchUpLeft = !inBounds(upLeft) || !map.isMoveable((int) upLeft.getX(), (int) upLeft.getY());
+                touchDownRight = !inBounds(downRight) || !map.isMoveable((int) downRight.getX(), (int) downRight.getY());
+                touchDownLeft = !inBounds(downLeft) || !map.isMoveable((int) downLeft.getX(), (int) downLeft.getY());
 
                 specialUpRight = (touchUpRight && !touchUp && !touchRight);
                 specialUpLeft = (touchUpLeft && !touchUp && !touchLeft);
@@ -94,26 +95,29 @@ public class Pather {
     }
 
     private boolean connectedGraphNodes(int i, int j) {
-        util.Coordinate a = graph.nodes.get(i).coordinate;
-        util.Coordinate b = graph.nodes.get(j).coordinate;
+        CoordinateD a = graph.nodes.get(i).coordinate;
+        CoordinateD b = graph.nodes.get(j).coordinate;
         return !intersectionFinder.intersects(a, b);
     }
 
-    private Coordinate nearestMoveable(int x, int y) {
-        if (map.isInBoundsMoveable(x, y))
-            return new Coordinate(x, y);
+    private Coordinate nearestMoveable(double x, double y) {
+        if (map.isInBoundsMoveable((int) x, (int) y))
+            return new Coordinate(x - .5, y - .5);
+
+        int xi = (int) x;
+        int yi = (int) y;
 
         int r = 1;
         while (r < NEAREST_MOVABLE_RANGE) {
             for (int i = -r; i < r; i++) {
-                if (map.isInBoundsMoveable(x + i, y - r))
-                    return new Coordinate(x + i, y - r);
-                if (map.isInBoundsMoveable(x + i, y + r))
-                    return new Coordinate(x + i, y + r);
-                if (map.isInBoundsMoveable(x - r, y + i))
-                    return new Coordinate(x - r, y + i);
-                if (map.isInBoundsMoveable(x + r, y + i))
-                    return new Coordinate(x + r, y + i);
+                if (map.isInBoundsMoveable(xi + i, yi - r))
+                    return new Coordinate(xi + i, yi - r);
+                if (map.isInBoundsMoveable(xi + i, yi + r))
+                    return new Coordinate(xi + i, yi + r);
+                if (map.isInBoundsMoveable(xi - r, yi + i))
+                    return new Coordinate(xi - r, yi + i);
+                if (map.isInBoundsMoveable(xi + r, yi + i))
+                    return new Coordinate(xi + r, yi + i);
             }
             r++;
         }

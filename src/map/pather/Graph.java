@@ -1,6 +1,6 @@
 package map.pather;
 
-import util.Coordinate;
+import util.CoordinateD;
 import util.Heap;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ class Graph { // todo cleanup
         nodes = new ArrayList<>();
     }
 
-    Node addNode(Coordinate coordinate) {
+    Node addNode(CoordinateD coordinate) {
         Node node = new Node();
         node.coordinate = coordinate;
         nodes.add(node);

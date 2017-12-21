@@ -133,7 +133,6 @@ public class Engine implements Runnable {
 // todo: pathfinding bug
 // todo: bug where spawning in corner makes u unable to move
 // todo: bug where only 1 room generated and monster, human, and exit are in same room
-// todo: bug where monster almost reached human but then jitters and becomes stuck
 
 // todo : senses
 // -> monster goes to general area where human is

@@ -1,7 +1,7 @@
 package map.pather;
 
-import util.Coordinate;
 import map.Map;
+import util.CoordinateD;
 import util.Math3D;
 
 class IntersectionFinder {
@@ -18,7 +18,7 @@ class IntersectionFinder {
         this.map = map;
     }
 
-    boolean intersects(Coordinate start, Coordinate end) {
+    boolean intersects(CoordinateD start, CoordinateD end) {
         x = start.getX() + .5;
         y = start.getY() + .5;
 

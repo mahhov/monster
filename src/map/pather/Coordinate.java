@@ -1,11 +1,11 @@
 package map.pather;
 
-class Coordinate extends util.Coordinate {
-    Coordinate(int x, int y) {
+class Coordinate extends util.CoordinateD {
+    Coordinate(double x, double y) {
         super(x, y);
     }
 
-    Coordinate modify(int dx, int dy) {
+    Coordinate modify(double dx, double dy) {
         return new Coordinate(getX() + dx, getY() + dy);
     }
 }

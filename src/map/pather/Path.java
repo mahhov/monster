@@ -1,13 +1,13 @@
 package map.pather;
 
-import util.Coordinate;
+import util.CoordinateD;
 import util.Math3D;
 
 import java.util.ArrayList;
 
 public class Path {
     static final Path EMPTY_PATH = new Path();
-    private Coordinate[] points;
+    private CoordinateD[] points;
     private int current;
 
     private Path() {
