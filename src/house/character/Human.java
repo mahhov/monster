@@ -32,17 +32,21 @@ public class Human extends Character {
         senseDirX /= distance;
         senseDirY /= distance;
         senseAlert = Math3D.minMax(1 - distance / SENSE_DISTANCE, 0, 1);
+
+        // blink
+        if (senseAlert > 0) {
+            senseBlink--;
+            int blinkOff = (int) (SENSE_BLINK_OFF - (SENSE_BLINK_OFF - SENSE_BLINK_ON) * senseAlert);
+            if (senseBlink == -SENSE_BLINK_ON || senseBlink > blinkOff)
+                senseBlink = blinkOff;
+        }
     }
 
     void drawSense(PainterQueue painterQueue, Camera camera) {
         if (senseAlert == 0)
             return;
 
-        senseBlink--;
-        int blinkOff = (int) (SENSE_BLINK_OFF - (SENSE_BLINK_OFF - SENSE_BLINK_ON) * senseAlert);
-        if (senseBlink == -SENSE_BLINK_ON || senseBlink > blinkOff)
-            senseBlink = blinkOff;
-
+        // bar
         double width = .4 * senseAlert;
         CoordinateGroup coord = new CoordinateGroup(new Coordinate[] {
                 new Coordinate(-width, .40),
@@ -50,6 +54,7 @@ public class Human extends Character {
         });
         painterQueue.add(new PainterRectangle(coord, 1, COLOR_SENSE, false, true), PainterQueue.OVERLAY_LAYER);
 
+        // blink
         if (senseBlink < 0)
             DrawUtil.drawRectFromCorner(painterQueue, camera, getX() + senseDirX, getY() + senseDirY, .25, 1, COLOR_SENSE, PainterQueue.OVERLAY_LAYER);
     }
