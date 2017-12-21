@@ -40,12 +40,38 @@ class Room {
         for (int x = left + 1; x < right; x++)
             for (int y = top + 1; y < bottom; y++)
                 walls[x][y] = false;
+
+        // connections
+        for (Room neighbor : getNeighbors()) {
+            int startX = getX();
+            int startY = getY();
+            int endX = neighbor.getX();
+            int endY = neighbor.getY();
+            int deltaX = endX > startX ? 1 : -1;
+            int deltaY = endY > startY ? 1 : -1;
+            endX += deltaX;
+            endY += deltaY;
+
+            if (Math3D.randBoolean(.5)) {
+                for (int x = startX; x != endX; x += deltaX)
+                    walls[x][startY] = false;
+                endX -= deltaX;
+                for (int y = startY; y != endY; y += deltaY)
+                    walls[endX][y] = false;
+            } else {
+                for (int y = startY; y != endY; y += deltaY)
+                    walls[startX][y] = false;
+                endY -= deltaY;
+                for (int x = startX; x != endX; x += deltaX)
+                    walls[x][endY] = false;
+            }
+        }
     }
 
     void addNeighbor(Room neighbor) {
         neighbors[numNeighbors++] = neighbor;
     }
-    
+
     Iterable<Room> getNeighbors() {
         return () -> new Iterator<Room>() {
             private int i = 0;

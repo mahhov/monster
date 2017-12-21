@@ -67,28 +67,6 @@ public class HouseGenerator {
             if (room1.distance(room2) < MAX_CONNECTION_LENGTH) {
                 room1.addNeighbor(room2);
                 room2.addNeighbor(room1);
-                int startX = room1.getX();
-                int startY = room1.getY();
-                int endX = room2.getX();
-                int endY = room2.getY();
-                int deltaX = endX > startX ? 1 : -1;
-                int deltaY = endY > startY ? 1 : -1;
-                endX += deltaX;
-                endY += deltaY;
-
-                if (Math3D.randBoolean(.5)) {
-                    for (int x = startX; x != endX; x += deltaX)
-                        walls[x][startY] = false;
-                    endX -= deltaX;
-                    for (int y = startY; y != endY; y += deltaY)
-                        walls[endX][y] = false;
-                } else {
-                    for (int y = startY; y != endY; y += deltaY)
-                        walls[startX][y] = false;
-                    endY -= deltaY;
-                    for (int x = startX; x != endX; x += deltaX)
-                        walls[x][endY] = false;
-                }
             }
         }
     }
