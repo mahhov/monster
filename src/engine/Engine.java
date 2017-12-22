@@ -144,4 +144,3 @@ public class Engine implements Runnable {
 // human alert when monster sniffed human
 // running makes detectible from farther
 // adjust monster sniff accuracy to be less accurate with closer distance
-// hint to exit

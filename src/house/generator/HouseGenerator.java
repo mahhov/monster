@@ -11,6 +11,7 @@ public class HouseGenerator {
     static final int NUM_ROOMS = 1000;
     private static final int NUM_CONNECTIONS = 1000, MAX_CONNECTION_LENGTH = 10;
     private static final int NUM_LIGHTS = 0;
+    private static final int HINT_RANGE = 50;
     private Room[] rooms;
     private int roomCount;
     private int[][] tiles;
@@ -26,6 +27,7 @@ public class HouseGenerator {
         fillRoomWalls();
         findSpawns();
         generateLights();
+        addExitHints();
     }
 
     private void initWalls() {
@@ -97,6 +99,27 @@ public class HouseGenerator {
 
     private void generateLights() {
         lights = findCoordinates(NUM_LIGHTS);
+    }
+
+    private void addExitHints() {
+        Coordinate exit = spawns[SPAWN_EXIT];
+
+        for (int i = 0; i < HINT_RANGE; i += 3) {
+            addExitHintsHelper(exit.getX() - i, exit.getY());
+            addExitHintsHelper(exit.getX() + i, exit.getY());
+            addExitHintsHelper(exit.getX(), exit.getY() - i);
+            addExitHintsHelper(exit.getX(), exit.getY() + i);
+
+            addExitHintsHelper(exit.getX() - i, exit.getY() - i);
+            addExitHintsHelper(exit.getX() - i, exit.getY() + i);
+            addExitHintsHelper(exit.getX() + i, exit.getY() - i);
+            addExitHintsHelper(exit.getX() + i, exit.getY() + i);
+        }
+    }
+
+    private void addExitHintsHelper(int x, int y) {
+        if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT && tiles[x][y] == House.TILE_FLOOR)
+            tiles[x][y] = House.TILE_SPECIAL_FLOOR;
     }
 
     private Coordinate[] findCoordinates(int num) {

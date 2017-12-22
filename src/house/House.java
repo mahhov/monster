@@ -24,7 +24,7 @@ public class House implements Map {
     private static final int VICTORY_HUMAN = 1, VICTORY_MONSTER = 2;
     private int victory;
 
-    private static final Color FLOOR_COLOR = new Color(200, 255, 200), SPECIAL_FLOOR_COLOR = new Color(200, 200, 255);
+    private static final Color FLOOR_COLOR = new Color(200, 255, 200), SPECIAL_FLOOR_COLOR = new Color(200, 200, 235);
     private static final Color WALL_SIDE_COLOR = Color.LIGHT_GRAY, WALL_TOP_COLOR = Color.GRAY;
     public static final int TILE_FLOOR = 0, TILE_WALL = 1, TILE_SPECIAL_FLOOR = 2;
     private int[][] tiles;
