@@ -1,5 +1,6 @@
 package house.generator;
 
+import house.House;
 import util.Math3D;
 
 import java.util.Iterator;
@@ -36,10 +37,10 @@ class Room {
         return distX + distY;
     }
 
-    void empty(boolean[][] walls) {
+    void empty(int[][] tiles) {
         for (int x = left + 1; x < right; x++)
             for (int y = top + 1; y < bottom; y++)
-                walls[x][y] = false;
+                tiles[x][y] = House.TILE_FLOOR;
 
         // connections
         for (Room neighbor : getNeighbors()) {
@@ -54,16 +55,16 @@ class Room {
 
             if (Math3D.randBoolean(.5)) {
                 for (int x = startX; x != endX; x += deltaX)
-                    walls[x][startY] = false;
+                    tiles[x][startY] = House.TILE_FLOOR;
                 endX -= deltaX;
                 for (int y = startY; y != endY; y += deltaY)
-                    walls[endX][y] = false;
+                    tiles[endX][y] = House.TILE_FLOOR;
             } else {
                 for (int y = startY; y != endY; y += deltaY)
-                    walls[startX][y] = false;
+                    tiles[startX][y] = House.TILE_FLOOR;
                 endY -= deltaY;
                 for (int x = startX; x != endX; x += deltaX)
-                    walls[x][endY] = false;
+                    tiles[x][endY] = House.TILE_FLOOR;
             }
         }
     }

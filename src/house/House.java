@@ -20,24 +20,30 @@ import util.Matrix;
 import java.awt.*;
 
 public class House implements Map {
-    private static final Color FLOOR_COLOR = new Color(200, 255, 200), WALL_SIDE_COLOR = Color.LIGHT_GRAY, WALL_TOP_COLOR = Color.GRAY;
-    private static final int VICTORY_HUMAN = 1, VICTORY_MONSTER = 2;
     private static final double VICTORY_DISTANCE = .5;
-    private static final int HOUSE_LIGHT_DISTANCE = 4, HUMAN_LIGHT_DISTANCE = 10;
+    private static final int VICTORY_HUMAN = 1, VICTORY_MONSTER = 2;
     private int victory;
-    private boolean[][] walls;
+
+    private static final Color FLOOR_COLOR = new Color(200, 255, 200), SPECIAL_FLOOR_COLOR = new Color(200, 200, 255);
+    private static final Color WALL_SIDE_COLOR = Color.LIGHT_GRAY, WALL_TOP_COLOR = Color.GRAY;
+    public static final int TILE_FLOOR = 0, TILE_WALL = 1, TILE_SPECIAL_FLOOR = 2;
+    private int[][] tiles;
+
     private LList<HouseDrawable> houseDrawables;
     private IntersectionFinder movementIntersectionFinder;
     private Pather pather;
+
+    private static final int HOUSE_LIGHT_DISTANCE = 4, HUMAN_LIGHT_DISTANCE = 10;
     private Lighter lighter;
     private Matrix light;
     private Matrix staticLight;
+
     private Human human;
     private Monster monster;
     private Exit exit;
 
-    public House(boolean[][] walls, util.Coordinate[] lights) {
-        this.walls = walls;
+    public House(int[][] tiles, util.Coordinate[] lights) {
+        this.tiles = tiles;
         houseDrawables = new LList<>();
         movementIntersectionFinder = new IntersectionFinder(this);
         pather = new Pather(this);
@@ -91,24 +97,32 @@ public class House implements Map {
     }
 
     public int getWidth() {
-        return walls.length;
+        return tiles.length;
     }
 
     public int getHeight() {
-        return walls[0].length;
+        return tiles[0].length;
     }
 
     public boolean isMoveable(int x, int y) {
-        return !walls[x][y];
+        return tiles[x][y] != TILE_WALL;
     }
 
     public void draw(PainterQueue painterQueue, Camera camera) {
-        for (int x = 0; x < walls.length; x++)
-            for (int y = 0; y < walls[0].length; y++)
-                if (walls[x][y])
-                    DrawUtil.drawCubeFromCorner(painterQueue, camera, x, y, 1, getLightValue(x, y), WALL_TOP_COLOR, WALL_SIDE_COLOR, PainterQueue.WALL_TOP_LAYER, PainterQueue.WALL_SIDE_LAYER);
-                else
-                    DrawUtil.drawRectFromCorner(painterQueue, camera, x, y, 1, getLightValue(x, y), FLOOR_COLOR, PainterQueue.FLOOR_LAYER);
+        for (int x = 0; x < tiles.length; x++)
+            for (int y = 0; y < tiles[0].length; y++)
+                switch (tiles[x][y]) {
+                    case TILE_WALL:
+                        DrawUtil.drawCubeFromCorner(painterQueue, camera, x, y, 1, getLightValue(x, y), WALL_TOP_COLOR, WALL_SIDE_COLOR, PainterQueue.WALL_TOP_LAYER, PainterQueue.WALL_SIDE_LAYER);
+                        break;
+                    case TILE_FLOOR:
+                        DrawUtil.drawRectFromCorner(painterQueue, camera, x, y, 1, getLightValue(x, y), FLOOR_COLOR, PainterQueue.FLOOR_LAYER);
+                        break;
+                    case TILE_SPECIAL_FLOOR:
+                        DrawUtil.drawRectFromCorner(painterQueue, camera, x, y, 1, getLightValue(x, y), SPECIAL_FLOOR_COLOR, PainterQueue.FLOOR_LAYER);
+                        break;
+
+                }
 
         for (LList<HouseDrawable> houseDrawable : houseDrawables)
             if (isLighted((int) houseDrawable.node.getX(), (int) houseDrawable.node.getY()))

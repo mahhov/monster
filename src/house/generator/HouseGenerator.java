@@ -1,5 +1,6 @@
 package house.generator;
 
+import house.House;
 import util.Coordinate;
 import util.Math3D;
 import util.Queue;
@@ -12,7 +13,8 @@ public class HouseGenerator {
     private static final int NUM_LIGHTS = 0;
     private Room[] rooms;
     private int roomCount;
-    private boolean[][] walls;
+    private int[][] tiles;
+    public static final int SPAWN_HUMAN = 0, SPAWN_MONSTER = 1, SPAWN_EXIT = 2;
     private Coordinate[] spawns;
     private Coordinate[] lights;
 
@@ -27,10 +29,10 @@ public class HouseGenerator {
     }
 
     private void initWalls() {
-        walls = new boolean[WIDTH][HEIGHT];
+        tiles = new int[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x++)
             for (int y = 0; y < HEIGHT; y++)
-                walls[x][y] = true;
+                tiles[x][y] = House.TILE_WALL;
     }
 
     private void placeRooms() {
@@ -86,7 +88,7 @@ public class HouseGenerator {
     private void fillRoomWalls() {
         for (int i = 0; i < roomCount; i++)
             if (rooms[i].isConnected())
-                rooms[i].empty(walls);
+                rooms[i].empty(tiles);
     }
 
     private void findSpawns() {
@@ -110,8 +112,8 @@ public class HouseGenerator {
         return coordinates;
     }
 
-    public boolean[][] getWalls() {
-        return walls;
+    public int[][] getTiles() {
+        return tiles;
     }
 
     public Coordinate getSpawn(int i) {

@@ -38,13 +38,14 @@ public class Engine implements Runnable {
         HouseGenerator houseGenerator = new HouseGenerator();
         houseGenerator.generate();
 
-        Human human = new Human(houseGenerator.getSpawn(0));
-        Monster monster = new Monster(houseGenerator.getSpawn(1));
+        Human human = new Human(houseGenerator.getSpawn(HouseGenerator.SPAWN_HUMAN));
+        Monster monster = new Monster(houseGenerator.getSpawn(HouseGenerator.SPAWN_MONSTER));
+        Exit exit = new Exit(houseGenerator.getSpawn(HouseGenerator.SPAWN_EXIT));
 
-        house = new House(houseGenerator.getWalls(), houseGenerator.getLights());
+        house = new House(houseGenerator.getTiles(), houseGenerator.getLights());
         house.setHuman(human);
         house.setMonster(monster);
-        house.setExit(new Exit(houseGenerator.getSpawn(2)));
+        house.setExit(exit);
 
         camera.setFollow(human);
     }
