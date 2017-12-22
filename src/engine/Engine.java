@@ -30,7 +30,7 @@ public class Engine implements Runnable {
     private Engine() {
         controller = new ControllerJava();
         painter = new PainterJava(FRAME, IMAGE, (ControllerJavaListener) controller);
-        camera = new Camera(0, 0, 20);
+        camera = new Camera(0, 0, 25);
         createHouse();
     }
 
@@ -140,7 +140,5 @@ public class Engine implements Runnable {
 // -> monster sniffs human location based on cooldown, and accuracy based on distance
 // -> monster goes to last sniff location unless line of sight of human or human light
 // human light toggle
-// monster leave footprint trail
 // human alert when monster sniffed human
 // running makes detectible from farther
-// adjust monster sniff accuracy to be less accurate with closer distance
