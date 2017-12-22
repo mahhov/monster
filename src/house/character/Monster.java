@@ -2,6 +2,7 @@ package house.character;
 
 import controller.Controller;
 import house.House;
+import house.particle.TimedParticle;
 import map.pather.Path;
 import util.Math3D;
 
@@ -9,8 +10,14 @@ import java.awt.*;
 
 public class Monster extends Character {
     private static final Color COLOR_TOP = new Color(160, 0, 0), COLOR_SIDE = new Color(120, 0, 0);
+
+    private static final Color COLOR_TRAIL = Color.BLACK;
+    private static final double TRAIL_SIZE = .4, TRAIL_DESNITY = .05;
+    private static final int TRAIL_DURATION = 800;
+
     private static final double WALK_SPEED = .12, RUN_SPEED = .45;
 
+    private static final double MIN_SNIFF_ERROR = 5, MAX_100_SNIFF_ERROR = 25;
     private static final int SENSE_SNIFF_COOLDOWN = 250;
     private int sniffCooldown;
     private Path wanderPath;
@@ -20,6 +27,8 @@ public class Monster extends Character {
     }
 
     public void update(House house, Controller controller, Character otherCharacter) {
+        if (Math3D.randBoolean(TRAIL_DESNITY))
+            house.addParticle(new TimedParticle(getX(), getY(), TRAIL_SIZE, COLOR_TRAIL, TRAIL_DURATION));
         applyComputer(house);
         super.update(house, controller, otherCharacter);
     }
