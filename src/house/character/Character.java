@@ -34,23 +34,6 @@ public class Character implements Follow, HouseCharacter {
         move(house);
     }
 
-    void applyController(Controller controller) {
-        setRun(controller.isKeyDown(Controller.PERIOD));
-
-        if (controller.isKeyDown(Controller.KEY_A))
-            setDirX(-1);
-        else if (controller.isKeyDown(Controller.KEY_D))
-            setDirX(1);
-        else
-            setDirX(0);
-        if (controller.isKeyDown(Controller.KEY_W))
-            setDirY(-1);
-        else if (controller.isKeyDown(Controller.KEY_S))
-            setDirY(1);
-        else
-            setDirY(0);
-    }
-
     private void move(House house) {
         double speed = run ? runSpeed : walkSpeed;
         double[] orig = new double[] {x, y};
@@ -73,7 +56,11 @@ public class Character implements Follow, HouseCharacter {
     public double getY() {
         return y;
     }
-
+    
+    boolean getRun() {
+        return run;
+    }
+    
     void setDirX(double dirX) {
         this.dirX = dirX;
     }
