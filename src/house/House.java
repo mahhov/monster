@@ -5,6 +5,7 @@ import controller.Controller;
 import engine.Engine;
 import house.character.Human;
 import house.character.Monster;
+import house.particle.Particle;
 import map.Map;
 import map.lighting.Lighter;
 import map.movement.IntersectionFinder;
@@ -41,6 +42,7 @@ public class House implements Map {
     private Human human;
     private Monster monster;
     private Exit exit;
+    private LList<Particle> particles;
 
     public House(int[][] tiles, util.Coordinate[] lights) {
         this.tiles = tiles;
@@ -52,6 +54,7 @@ public class House implements Map {
         staticLight = new Matrix(getWidth(), getHeight(), Lighter.MIN_LIGHT);
         for (util.Coordinate light : lights)
             lighter.calculateLight(light.getX(), light.getY(), staticLight, HOUSE_LIGHT_DISTANCE);
+        particles = new LList<>();
     }
 
     public void setHuman(Human human) {
@@ -69,10 +72,20 @@ public class House implements Map {
         houseDrawables = houseDrawables.add(exit);
     }
 
+    public void addParticle(Particle particle) {
+        particles = particles.add(particle);
+    }
+
     public void update(Controller controller) {
         human.update(this, controller, monster);
         monster.update(this, controller, human);
+
+        for (LList<Particle> particle : particles)
+            if (particle.node.update())
+                particles.remove(particle);
+
         testWinConditions();
+
         light.reset();
         lighter.calculateLight(human.getX(), human.getY(), light, HUMAN_LIGHT_DISTANCE);
     }
@@ -126,7 +139,11 @@ public class House implements Map {
 
         for (LList<HouseDrawable> houseDrawable : houseDrawables)
             if (isLighted((int) houseDrawable.node.getX(), (int) houseDrawable.node.getY()))
-                houseDrawable.node.draw(painterQueue, camera);
+                houseDrawable.node.draw(painterQueue, camera, getLightValue((int) houseDrawable.node.getX(), (int) houseDrawable.node.getY()));
+
+        for (LList<Particle> particle : particles)
+            if (isLighted((int) particle.node.getX(), (int) particle.node.getY()))
+                particle.node.draw(painterQueue, camera, getLightValue((int) particle.node.getX(), (int) particle.node.getY()));
     }
 
     private double getLightValue(int x, int y) {

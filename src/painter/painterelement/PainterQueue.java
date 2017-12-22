@@ -8,6 +8,7 @@ public class PainterQueue extends PainterElement {
     public static final int
             FLOOR_LAYER, WALL_SIDE_LAYER, WALL_TOP_LAYER,
             CHARACTER_SIDE_LAYER, CHARACTER_TOP_LAYER,
+            PARTICLE_LAYER,
             SENSE_TOP_LAYER, SENSE_SIDE_LAYER,
             OVERLAY_LAYER;
 
@@ -18,6 +19,7 @@ public class PainterQueue extends PainterElement {
         WALL_TOP_LAYER = i++;
         CHARACTER_SIDE_LAYER = i++;
         CHARACTER_TOP_LAYER = i++;
+        PARTICLE_LAYER = i++;
         SENSE_TOP_LAYER = i++;
         SENSE_SIDE_LAYER = i++;
         OVERLAY_LAYER = i++;

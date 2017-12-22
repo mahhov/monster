@@ -71,8 +71,8 @@ public class Character implements Follow, HouseCharacter {
     void setSense(House house, Character source) {
     }
 
-    public void draw(PainterQueue painterQueue, Camera camera) {
-        DrawUtil.drawCubeFromCenter(painterQueue, camera, x, y, SIZE, colorTop, colorSide, PainterQueue.CHARACTER_TOP_LAYER, PainterQueue.CHARACTER_SIDE_LAYER);
+    public void draw(PainterQueue painterQueue, Camera camera, double light) {
+        DrawUtil.drawCubeFromCenter(painterQueue, camera, x, y, SIZE, light, colorTop, colorSide, PainterQueue.CHARACTER_TOP_LAYER, PainterQueue.CHARACTER_SIDE_LAYER);
 
         if (main)
             drawSense(painterQueue, camera);
