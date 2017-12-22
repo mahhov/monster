@@ -39,8 +39,8 @@ public class Monster extends Character {
             wanderPath = house.getPather().pathFind(getX(), getY(), source.getX(), source.getY());
         else if (sniffReady) {
             sniffCooldown = 0;
-            double distance = Math3D.magnitude(getX() - source.getX(), getY() - source.getY()); // todo : use magnitudeSqr
-            double sniffError = distance / 10;
+            double distanceSqr = Math3D.magnitudeSqr(getX() - source.getX(), getY() - source.getY());
+            double sniffError = distanceSqr / 10 + 5;
             double sniffX = Math3D.random(source.getX() - sniffError, source.getX() + sniffError);
             double sniffY = Math3D.random(source.getY() - sniffError, source.getY() + sniffError);
             wanderPath = house.getPather().pathFind(getX(), getY(), sniffX, sniffY);
