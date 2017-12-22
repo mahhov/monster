@@ -134,11 +134,3 @@ public class Engine implements Runnable {
 // todo: pathfinding bug
 // todo: bug where spawning in corner makes u unable to move
 // todo: bug where only 1 room generated and monster, human, and exit are in same room
-
-// todo : senses
-// -> monster goes to general area where human is
-// -> monster sniffs human location based on cooldown, and accuracy based on distance
-// -> monster goes to last sniff location unless line of sight of human or human light
-// human light toggle
-// human alert when monster sniffed human
-// running makes detectible from farther

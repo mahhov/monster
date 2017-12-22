@@ -12,8 +12,8 @@ public class Exit implements HouseDrawable {
     private double x, y;
 
     public Exit(Coordinate spawn) {
-        x = spawn.getX();
-        y = spawn.getY();
+        x = spawn.getX() + .5;
+        y = spawn.getY() + .5;
     }
 
     public void draw(PainterQueue painterQueue, Camera camera, double light) {
