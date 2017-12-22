@@ -1,5 +1,6 @@
 package house.character;
 
+import controller.Controller;
 import house.House;
 import map.pather.Path;
 import util.Math3D;
@@ -15,10 +16,15 @@ public class Monster extends Character {
     private Path wanderPath;
 
     public Monster(util.Coordinate spawn) {
-        super(false, COLOR_TOP, COLOR_SIDE, WALK_SPEED, RUN_SPEED, spawn);
+        super(COLOR_TOP, COLOR_SIDE, WALK_SPEED, RUN_SPEED, spawn);
     }
 
-    void applyComputer(House house) {
+    public void update(House house, Controller controller, Character otherCharacter) {
+        applyComputer(house);
+        super.update(house, controller, otherCharacter);
+    }
+
+    private void applyComputer(House house) {
         if (wanderPath != null && !wanderPath.done()) {
             setDirX(wanderPath.getX() - getX());
             setDirY(wanderPath.getY() - getY());

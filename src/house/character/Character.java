@@ -13,7 +13,6 @@ import java.awt.*;
 
 public class Character implements Follow, HouseCharacter {
     private static final double SIZE = .5;
-    private boolean main;
     private Color colorTop, colorSide;
     private double walkSpeed, runSpeed;
 
@@ -21,8 +20,7 @@ public class Character implements Follow, HouseCharacter {
     private double dirX, dirY;
     private boolean run;
 
-    Character(boolean main, Color colorTop, Color colorSide, double walkSpeed, double runSpeed, util.Coordinate spawn) {
-        this.main = main;
+    Character(Color colorTop, Color colorSide, double walkSpeed, double runSpeed, util.Coordinate spawn) {
         this.colorTop = colorTop;
         this.colorSide = colorSide;
         this.walkSpeed = walkSpeed;
@@ -33,14 +31,10 @@ public class Character implements Follow, HouseCharacter {
 
     public void update(House house, Controller controller, Character otherCharacter) {
         setSense(house, otherCharacter);
-        if (main)
-            applyController(controller);
-        else
-            applyComputer(house);
         move(house);
     }
 
-    private void applyController(Controller controller) {
+    void applyController(Controller controller) {
         setRun(controller.isKeyDown(Controller.PERIOD));
 
         if (controller.isKeyDown(Controller.KEY_A))
@@ -57,9 +51,6 @@ public class Character implements Follow, HouseCharacter {
             setDirY(0);
     }
 
-    void applyComputer(House house) {
-    }
-
     private void move(House house) {
         double speed = run ? runSpeed : walkSpeed;
         double[] orig = new double[] {x, y};
@@ -73,12 +64,6 @@ public class Character implements Follow, HouseCharacter {
 
     public void draw(PainterQueue painterQueue, Camera camera, double light) {
         DrawUtil.drawCubeFromCenter(painterQueue, camera, x, y, SIZE, light, colorTop, colorSide, PainterQueue.CHARACTER_TOP_LAYER, PainterQueue.CHARACTER_SIDE_LAYER);
-
-        if (main)
-            drawSense(painterQueue, camera);
-    }
-
-    void drawSense(PainterQueue painterQueue, Camera camera) {
     }
 
     public double getX() {

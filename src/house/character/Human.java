@@ -1,6 +1,7 @@
 package house.character;
 
 import camera.Camera;
+import controller.Controller;
 import house.House;
 import painter.geometry.Coordinate;
 import painter.geometry.CoordinateGroup;
@@ -22,7 +23,12 @@ public class Human extends Character {
     private int senseBlink;
 
     public Human(util.Coordinate spawn) {
-        super(true, COLOR_TOP, COLOR_SIDE, WALK_SPEED, RUN_SPEED, spawn);
+        super(COLOR_TOP, COLOR_SIDE, WALK_SPEED, RUN_SPEED, spawn);
+    }
+
+    public void update(House house, Controller controller, Character otherCharacter) {
+        applyController(controller);
+        super.update(house, controller, otherCharacter);
     }
 
     void setSense(House house, Character source) {
@@ -42,7 +48,12 @@ public class Human extends Character {
         }
     }
 
-    void drawSense(PainterQueue painterQueue, Camera camera) {
+    public void draw(PainterQueue painterQueue, Camera camera, double light) {
+        drawSense(painterQueue, camera);
+        super.draw(painterQueue, camera, light);
+    }
+
+    private void drawSense(PainterQueue painterQueue, Camera camera) {
         if (senseAlert == 0)
             return;
 
