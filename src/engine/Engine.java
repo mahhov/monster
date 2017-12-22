@@ -142,4 +142,5 @@ public class Engine implements Runnable {
 // monster leave footprint trail
 // human alert when monster sniffed human
 // running makes detectible from farther
-// monster only slightly faster
+// adjust monster sniff accuracy to be less accurate with closer distance
+// hint to exit

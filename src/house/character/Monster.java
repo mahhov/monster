@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Monster extends Character {
     private static final Color COLOR_TOP = new Color(160, 0, 0), COLOR_SIDE = new Color(120, 0, 0);
-    private static final double WALK_SPEED = .15, RUN_SPEED = .45;
+    private static final double WALK_SPEED = .12, RUN_SPEED = .45;
 
     private static final int SENSE_SNIFF_COOLDOWN = 250;
     private int sniffCooldown;
