@@ -127,10 +127,8 @@ public class Engine implements Runnable {
 }
 
 
-// todo: movement when sliding on walls shouldn't slow down
-// todo: monster slower or more warning so you're not dead before you can respond
 // todo: better map generation to avoid the "tight and wrinkly" repetitive maps
-// todo: some kind of clues as to where the exit is or some way of figuring it out without relying on pure random luck and walking "my experience was running around aimlessly"
 // todo: pathfinding bug
 // todo: bug where spawning in corner makes u unable to move
 // todo: bug where only 1 room generated and monster, human, and exit are in same room
+// todo: human gets alert when monster has line of sight

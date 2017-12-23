@@ -3,11 +3,15 @@ package map.movement;
 import map.Map;
 import util.Math3D;
 
-public class IntersectionFinder { // todo : clean up + temp vars
+public class IntersectionFinder {
+    // temp vars
     private double x, y;
-    private int intLeftX, intRightX;
-    private int intTopY, intBottomY;
-    private double halfSize;
+    private double dx, dy;
+    private double halfSize, edgeDx, edgeDy;
+    private boolean horizontal;
+    private double edgeX, edgeY;
+    private double deltaX, deltaY, delta;
+    private int nextX, nextY;
 
     private Map map;
 
@@ -18,103 +22,60 @@ public class IntersectionFinder { // todo : clean up + temp vars
     public Intersection find(double[] orig, double[] dir, double maxMove, double size) {
         x = orig[0];
         y = orig[1];
-        dir = Math3D.setMagnitude(dir[0], dir[1], maxMove);
+
+        dir = Math3D.setMagnitude(dir[0], dir[1], 1);
+        dx = dir[0];
+        dy = dir[1];
+
         halfSize = size / 2;
+        edgeDx = dx < 0 ? -halfSize : halfSize;
+        edgeDy = dy < 0 ? -halfSize : halfSize;
 
-        intTopY = (int) (y - halfSize + Math3D.EPSILON);
-        intBottomY = (int) (y + halfSize - Math3D.EPSILON);
+        while (true) {
+            edgeX = x + edgeDx;
+            edgeY = y + edgeDy;
 
-        if (dir[0] < 0)
-            helperLeft(dir[0]);
-        else if (dir[0] > 0)
-            helperRight(dir[0]);
+            deltaX = getMove(edgeX, dx);
+            deltaY = getMove(edgeY, dy);
+            horizontal = deltaX < deltaY;
+            delta = horizontal ? deltaX : deltaY;
 
-        intLeftX = (int) (x - halfSize + Math3D.EPSILON);
-        intRightX = (int) (x + halfSize - Math3D.EPSILON);
+            if (delta > maxMove)
+                return new Intersection(x + dx * maxMove, y + dy * maxMove);
+            else {
+                delta += Math3D.EPSILON;
+                nextX = (int) (edgeX + dx * delta);
+                nextY = (int) (edgeY + dy * delta);
 
-        if (dir[1] < 0)
-            helperTop(dir[1]);
-        else if (dir[1] > 0)
-            helperBottom(dir[1]);
+                if (horizontal && !(map.isInBoundsMoveable(nextX, (int) (y - halfSize))
+                        && map.isInBoundsMoveable(nextX, (int) (y + halfSize)))) {
+                    if (dy == 0)
+                        return new Intersection(x, y);
+                    dx = 0;
+                    dy = dy < 0 ? -1 : 1;
 
-        return new Intersection(x, y);
-    }
-
-    private void helperLeft(double maxDelta) {
-        maxDelta = -maxDelta;
-        boolean done = false;
-        while (!done) {
-            double edge = x - halfSize;
-            int intEdge = (int) (edge - Math3D.EPSILON);
-            if (map.isInBoundsMoveable(intEdge, intTopY) && map.isInBoundsMoveable(intEdge, intBottomY)) {
-                double delta = edge - intEdge;
-                if (delta > maxDelta) {
-                    x -= maxDelta;
-                    done = true;
+                } else if (!horizontal && !(map.isInBoundsMoveable((int) (x - halfSize), nextY)
+                        && map.isInBoundsMoveable((int) (x + halfSize), nextY))) {
+                    if (dx == 0)
+                        return new Intersection(x, y);
+                    dy = 0;
+                    dx = dx < 0 ? -1 : 1;
+                
                 } else {
-                    x -= delta;
-                    maxDelta -= delta;
+                    x += dx * delta;
+                    y += dy * delta;
+                    maxMove -= delta;
                 }
-            } else
-                done = true;
+            }
         }
     }
 
-    private void helperRight(double maxDelta) {
-        boolean done = false;
-        while (!done) {
-            double edge = x + halfSize;
-            int intEdge = (int) (edge + Math3D.EPSILON);
-            if (map.isInBoundsMoveable(intEdge, intTopY) && map.isInBoundsMoveable(intEdge, intBottomY)) {
-                double delta = intEdge - edge + 1;
-                if (delta > maxDelta) {
-                    x += maxDelta;
-                    done = true;
-                } else {
-                    x += delta;
-                    maxDelta -= delta;
-                }
-            } else
-                done = true;
-        }
-    }
-
-    private void helperTop(double maxDelta) {
-        maxDelta = -maxDelta;
-        boolean done = false;
-        while (!done) {
-            double edge = y - halfSize;
-            int intEdge = (int) (edge - Math3D.EPSILON);
-            if (map.isInBoundsMoveable(intLeftX, intEdge) && map.isInBoundsMoveable(intRightX, intEdge)) {
-                double delta = edge - intEdge;
-                if (delta > maxDelta) {
-                    y -= maxDelta;
-                    done = true;
-                } else {
-                    y -= delta;
-                    maxDelta -= delta;
-                }
-            } else
-                done = true;
-        }
-    }
-
-    private void helperBottom(double maxDelta) {
-        boolean done = false;
-        while (!done) {
-            double edge = y + halfSize;
-            int intEdge = (int) (edge + Math3D.EPSILON);
-            if (map.isInBoundsMoveable(intLeftX, intEdge) && map.isInBoundsMoveable(intRightX, intEdge)) {
-                double delta = intEdge - edge + 1;
-                if (delta > maxDelta) {
-                    y += maxDelta;
-                    done = true;
-                } else {
-                    y += delta;
-                    maxDelta -= delta;
-                }
-            } else
-                done = true;
-        }
+    private double getMove(double pos, double dir) {
+        if (dir > 0)
+            return ((int) pos + 1 - pos) / dir;
+        else if (dir < 0)
+            return (pos - (int) pos) / -dir;
+        else
+            return 2;
     }
 }
