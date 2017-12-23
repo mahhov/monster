@@ -6,7 +6,7 @@ This is a human v.s. monster game. You, the human, are stuck in a house, looking
 
 ## Download and Run Instructions
 
-
+Download and run the jar from the base directory, `java -jar monster.jar`
 
 ## Controls
 
