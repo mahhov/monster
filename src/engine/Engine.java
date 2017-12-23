@@ -18,7 +18,7 @@ public class Engine implements Runnable {
     public static final boolean DEBUG_LIGHTING_ON = false;
 
     private static final long NANOSECONDS_IN__SECOND = 1000000000L;
-    private static final int FRAME = 400, IMAGE = 400;
+    private static final int FRAME = 1000, IMAGE = 1000;
 
     private Controller controller;
     private Painter painter;
