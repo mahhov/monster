@@ -8,7 +8,7 @@ import util.Queue;
 public class HouseGenerator {
     private static final int WIDTH = 128, HEIGHT = 128;
     private static final int MIN_ROOM_SIZE = 5, MAX_ROOM_SIZE = 12;
-    static final int NUM_ROOMS = 1000;
+    static final int NUM_ROOMS = 1000, MIN_ROOMS_CONNECTED = 70;
     private static final int NUM_CONNECTIONS = 1000, MAX_CONNECTION_LENGTH = 10;
     private static final int NUM_LIGHTS = 0;
     private static final int HINT_RANGE = 50;
@@ -20,10 +20,12 @@ public class HouseGenerator {
     private Coordinate[] lights;
 
     public void generate() {
-        initWalls();
-        placeRooms();
-        connectRooms();
-        pruneUnconnectedRooms();
+        do {
+            roomCount = 0;
+            initWalls();
+            placeRooms();
+            connectRooms();
+        } while (!pruneUnconnectedRooms());
         fillRoomWalls();
         findSpawns();
         generateLights();
@@ -75,16 +77,19 @@ public class HouseGenerator {
         }
     }
 
-    private void pruneUnconnectedRooms() {
+    private boolean pruneUnconnectedRooms() {
         Queue<Room> openRooms = new Queue<>(NUM_ROOMS);
         openRooms.insert(rooms[0]);
         rooms[0].setConnected();
+        int numConnected = 1;
         while (!openRooms.isEmpty())
             for (Room neighbor : openRooms.remove().getNeighbors())
                 if (!neighbor.isConnected()) {
                     neighbor.setConnected();
+                    numConnected++;
                     openRooms.insert(neighbor);
                 }
+        return numConnected > MIN_ROOMS_CONNECTED;
     }
 
     private void fillRoomWalls() {

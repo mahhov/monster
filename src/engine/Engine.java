@@ -130,5 +130,4 @@ public class Engine implements Runnable {
 // todo: better map generation to avoid the "tight and wrinkly" repetitive maps
 // todo: pathfinding bug
 // todo: bug where spawning in corner makes u unable to move
-// todo: bug where only 1 room generated and monster, human, and exit are in same room
 // todo: human gets alert when monster has line of sight
